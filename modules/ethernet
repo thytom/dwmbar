@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Prints out if there is an ethernet cable connected
+
+ETHERNET_ICON=''
+
+get_ethernet()
+{
+    if [ -d /sys/class/net/eth? ]; then
+        if [ "$(cat /sys/class/net/eth?/carrier)" == "1" ]; then
+            echo "$ETHERNET_ICON"
+        fi
+    fi
+}
+
+get_ethernet

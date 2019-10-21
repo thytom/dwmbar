@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# Gets the network status
+# Gets the wifi status
 
 WIFI_FULL_ICON=''
 WIFI_MID_ICON=''
 WIFI_LOW_ICON=''
-ETHERNET_ICON=''
 
-get_network() 
+get_wifi() 
 {
         if grep -q wlan* "/proc/net/wireless"; then
                 # Wifi quality percentage
@@ -18,13 +17,7 @@ get_network()
                         2[0-9]|1[0-9]|[0-9])            echo "$WIFI_LOW_ICON" ;;
                 esac
         fi
-
-        if [ -d /sys/class/net/eth? ]; then
-                if [ "$(cat /sys/class/net/eth?/carrier)" == "1" ]; then
-                        echo "$ETHERNET_ICON"
-                fi
-        fi
 }
 
-get_network
+get_wifi
 
