@@ -16,13 +16,13 @@ Modules:
 - Disk Usage
 - Mail
 - CPU Usage
-- Temperature
-- Volume
 - Network
-- Temperature
-- Battery
+- Volume Bar
 
 Finished Modules:
+- Volume
+- Battery
+- Temperature
 - Weather
 - Bluetooth
 - Arch Updates

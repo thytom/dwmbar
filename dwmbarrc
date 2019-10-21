@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# Example file, designed to be edited.
+
 MODULES_DIR="modules/"
 
 SEPARATOR=" | "
 
-MODULES="volume temperature date time battery"
+MODULES="wifi internet bluetooth volume temperature date time battery"
 
 run_modules(){
 	for module in $MODULES; do
