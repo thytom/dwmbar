@@ -13,4 +13,6 @@ echo "dwmbar $VERSION"
 
 }
 
-xsetroot -name "$(exec $RC_LOCATION)"
+while :; do
+	xsetroot -name "$(exec $RC_LOCATION)"
+done
