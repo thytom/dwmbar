@@ -1,8 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 # Prints out the date
 
-PREFIX_ICON=''
+PREFIX=''
 
-echo "$PREFIX_ICON $(date '+%d-%m-%y (%a)')"
+date()
+{
+    echo "$PREFIX $(date '+%d-%m-%y (%a)')"
+}
 
+date

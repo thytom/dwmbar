@@ -2,6 +2,11 @@
 
 # Prints out the time
 
-PREFIX_ICON=' '
+PREFIX=' '
 
-echo "$PREFIX_ICON$(date '+%H:%M')"
+time()
+{
+    echo "$PREFIX$(date '+%H:%M')"
+}
+
+time
