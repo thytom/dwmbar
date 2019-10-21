@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Prints out if there is an internet connection
+# Requires an internet connection
 
 INTERNET_ICON=''
 
