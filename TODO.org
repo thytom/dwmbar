@@ -11,15 +11,15 @@ Each module writes to stdout.
 
 * Todo List
 
-Modules:
-- MPD (archie)
+Modules to Write:
 - Disk Usage
 - Mail
 - CPU Usage
-- Volume Bar (archie)
 - Memory Usage
 
-Finished Modules:
+Working Modules:
+- Volume Bar
+- MPD
 - Backlight
 - Network
 - Volume
