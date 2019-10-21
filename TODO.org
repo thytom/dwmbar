@@ -12,9 +12,10 @@ Each module writes to stdout.
 * Todo List
 
 Modules:
-[ ] - Date
+[x] - Time
+[x] - Date
 [ ] - Weather
-[ ] - Updates
+[x] - Arch Updates
 [ ] - MPD
 [ ] - Disk Usage
 [ ] - Mail
