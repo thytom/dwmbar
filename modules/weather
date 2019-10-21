@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Prints out the weather at your approximate location
+
+get_weather()
+{
+    LOCATION=$(geolocate)
+    LANG="en"
+    UNITS="Metric"
+    API_KEY="756edce7e9d4c385ef9499a53492678c"
+
+    LOCATION_FORMATTED_2=$(echo $LOCATION | cut -d ':' -f2)
+    LOCATION_FORMATTED_1=$(echo $LOCATION | cut -d ':' -f1)
+
+    OUTPUT=$(curl -s "http://api.openweathermap.org/data/2.5/weather?lat=$LOCATION_FORMATTED_1&lon=$LOCATION_FORMATTED_2&lang=$LANG&appid=$API_KEY&units=$UNITS")
+    STATUS=$(echo $OUTPUT | jq '.weather' | tr '[' ' ' | tr ']' ' ' | jq '.main' | sed 's/"//g')
+    TEMP=$(echo $OUTPUT | jq '.main' | jq '.temp' | xargs printf "%.*f\n" 0)
+
+    case $STATUS in
+        "Clear" )
+            echo "";;
+        "Clouds" )
+            echo "摒";;
+        "Rain" )
+            echo "歹";;
+        "Thunderstorm" )
+            echo "朗";;
+        "Snow" )
+            echo "流";;
+        "Mist" )
+            echo "敖";;
+        * )
+        echo "?";;
+                esac
+
+        echo "$STATUS, "
+        echo "$TEMP°C"
+}
+
+get_weather
+

@@ -5,7 +5,7 @@
 
 PREFIX=' Updates:'
 
-updates() 
+get_updates() 
 {
     if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
         updates_arch=0
@@ -20,4 +20,4 @@ updates()
     echo "$PREFIX $updates"
 }
 
-updates
+get_updates

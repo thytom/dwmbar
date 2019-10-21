@@ -4,9 +4,9 @@
 
 PREFIX=''
 
-date()
+get_date()
 {
     echo "$PREFIX $(date '+%d-%m-%y (%a)')"
 }
 
-date
+get_date

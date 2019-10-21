@@ -4,9 +4,9 @@
 
 PREFIX=' '
 
-time()
+get_time()
 {
     echo "$PREFIX$(date '+%H:%M')"
 }
 
-time
+get_time
