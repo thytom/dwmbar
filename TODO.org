@@ -12,21 +12,21 @@ Each module writes to stdout.
 * Todo List
 
 Modules:
-[x] - Time
-[x] - Date
-[ ] - Weather
-[x] - Arch Updates
-[ ] - MPD
-[ ] - Disk Usage
-[ ] - Mail
-[ ] - CPU Usage
-[ ] - Temperature
-[ ] - Volume
-[ ] - Bluetooth
-[ ] - Network
-[ ] - Temperature
-[ ] - Battery
+- [x] Time
+- [x] Date
+- [ ] Weather
+- [x] Arch Updates
+- [ ] MPD
+- [ ] Disk Usage
+- [ ] Mail
+- [ ] CPU Usage
+- [ ] Temperature
+- [ ] Volume
+- [ ] Bluetooth
+- [ ] Network
+- [ ] Temperature
+- [ ] Battery
 
 Scripts
-[ ] - /usr/bin/dwmbar
-[ ] - /home/$USER/.config/dwmbarrc
+- [ ] /usr/bin/dwmbar
+- [ ] /home/$USER/.config/dwmbarrc
