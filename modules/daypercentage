@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Prints the percentage of the day that has been completed
+
+PREFIX=' '
+
+get_daypercentage()
+{
+    MINUTES="$[$(date +%R | cut -d ':' -f1) * 60 + $(date +%R | cut -d ':' -f2) ]"
+    echo "$PREFIX$(echo $[ $MINUTES * 100 / 1440 ]  | sed 's/\..*//g')%"
+}
+
+get_daypercentage
