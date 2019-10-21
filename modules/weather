@@ -1,6 +1,15 @@
 #!/bin/bash
 
 # Prints out the weather at your approximate location
+# Needs an internet connection
+# Dependencies: jq
+
+SUN_ICON=''
+CLOUD_ICON='摒'
+RAIN_ICON='歹'
+THUNDER_ICON='朗'
+SNOW_ICON='流'
+MIST_ICON='敖'
 
 get_weather()
 {
@@ -24,23 +33,23 @@ get_weather()
 
     case $STATUS in
         "Clear" )
-            echo "";;
+            echo $SUN_ICON;;
         "Clouds" )
-            echo "摒";;
+            echo $CLOUD_ICON;;
         "Rain" )
-            echo "歹";;
+            echo $RAIN_ICON;;
         "Thunderstorm" )
-            echo "朗";;
+            echo $THUNDER_ICON;;
         "Snow" )
-            echo "流";;
+            echo $SNOW_ICON;;
         "Mist" )
-            echo "敖";;
+            echo $MIST_ICON;;
         * )
-        echo "?";;
-                esac
+            echo "?";;
+    esac
 
-        echo "$STATUS, "
-        echo "$TEMP°C"
+    echo "$STATUS, "
+    echo "$TEMP°C"
 }
 
 get_weather
