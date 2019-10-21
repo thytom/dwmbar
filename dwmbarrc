@@ -1,10 +1,22 @@
 #!/bin/bash
 
-modules(){
+MODULES_DIR="modules/"
+
+SEPARATOR=" | "
+
+MODULES="test archupdates weather date time"
+
+run_modules(){
+	for module in $MODULES; do
+		[[ ! "$OUTPUT" = "" ]] && OUTPUT="$OUTPUT$SEPARATOR"
+
+		OUTPUT="$OUTPUT$(exec $MODULES_DIR$module)"
+	done
 }
 
 run(){
-	echo "Test"
+	run_modules
+	echo $OUTPUT
 }
 
 run
