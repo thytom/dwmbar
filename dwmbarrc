@@ -4,6 +4,7 @@
 
 DELAY=5
 MODULES_DIR="modules/"
+CUSTOM_DIR="modules/custom/"
 SEPARATOR=" | "
 
 MODULES="wifi internet bluetooth volume temperature date time battery"
@@ -11,7 +12,11 @@ MODULES="wifi internet bluetooth volume temperature date time battery"
 run_modules(){
 	for module in $MODULES; do
 		[[ ! "$OUTPUT" = "" ]] && OUTPUT="$OUTPUT$SEPARATOR"
-		OUTPUT="$OUTPUT$(exec $MODULES_DIR$module)"
+		if [[ -f "$CUSTOM_DIR$module" ]]; then
+			OUTPUT="$OUTPUT$(exec $CUSTOM_DIR$module)"
+		elif
+			OUTPUT="$OUTPUT$(exec $MODULES_DIR$module)"
+		fi
 	done
 }
 

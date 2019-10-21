@@ -17,10 +17,10 @@ Modules:
 - Mail
 - CPU Usage
 - Volume Bar (archie)
-- Backlight
 - Memory Usage
 
 Finished Modules:
+- Backlight
 - Network
 - Volume
 - Battery
@@ -31,6 +31,6 @@ Finished Modules:
 - Time
 - Date
 
-Scripts
+Scripts:
 - Individual module delays.
-- Modules that don't output anything shouldn't get a separator.
+- Make install script install locally and not for root.
