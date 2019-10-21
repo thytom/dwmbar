@@ -1,31 +1,40 @@
 #!/bin/bash
 
+# Prints out battery percentage
+
+CHARGING_ICON=''
+WARNING_ICON=''
+BATTERY_FULL_ICON=''
+BATTERY_2_ICON=''
+BATTERY_3_ICON=''
+BATTERY_4_ICON=''
+
 get_battery()
 {
     if [ -d /sys/class/power_supply/BAT? ]; then
         ac_adapter=$(cat /sys/class/power_supply/BAT?/status)
         if [ "$ac_adapter" == "Charging" ]; then
-            echo ""
+            echo "$CHARGING_ICON"
         fi
 
         # Will show all batteries with approximate icon for remaining power.
         for x in /sys/class/power_supply/BAT?/capacity;
         do
             case "$(cat $x)" in
-                100)            echo ""            ;;
-                9[0-9])         echo " $(cat $x)%" ;;
-                8[0-9]|7[0-9])  echo " $(cat $x)%" ;;
-                6[0-9]|5[0-9])  echo " $(cat $x)%" ;;
-                4[0-9]|3[0-9])  echo " $(cat $x)%" ;;
+                100)            echo "$BATTERY_FULL_ICON"            ;;
+                9[0-9])         echo "$BATTERY_FULL_ICON $(cat $x)%" ;;
+                8[0-9]|7[0-9])  echo "$BATTERY_2_ICON $(cat $x)%" ;;
+                6[0-9]|5[0-9])  echo "$BATTERY_3_ICON $(cat $x)%" ;;
+                4[0-9]|3[0-9])  echo "$BATTERY_4_ICON $(cat $x)%" ;;
                 2[0-9]|1[0-9])  if [ "$ac_adapter" == "Charging" ]; then
-                                    echo " $(cat $x)%"
+                                    echo "$BATTERY_4_ICON $(cat $x)%"
                                 else
-                                    echo "   $(cat $x)%"
+                                    echo "$WARNING_ICON  $BATTERY_4_ICON $(cat $x)%"
                                 fi ;;
                 [0-9])          if [ "$ac_adapter" == "Charging" ]; then
-                                    echo " $(cat $x)%"
+                                    echo "$BATTERY_4_ICON $(cat $x)%"
                                 else
-                                    echo "   $(cat $x)%"
+                                    echo "$WARNING_ICON  $BATTERY_4_ICON $(cat $x)%"
                                 fi ;;
                 esac
         done

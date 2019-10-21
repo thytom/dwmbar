@@ -2,6 +2,7 @@
 
 # Prints out the number of pacman updates (Arch Linux)
 # Requires an internet connection
+# Depends on yay and checkupdates (pacman-contrib)
 
 PREFIX=' Updates:'
 
