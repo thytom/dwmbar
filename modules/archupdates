@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Prints out the number of pacman updates (Arch Linux)
+# Requires an internet connection
+
+PREFIX=' Updates:'
+
+updates() 
+{
+    if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
+        updates_arch=0
+    fi
+
+    if ! updates_aur=$(yay -Qum --devel 2> /dev/null | wc -l); then
+        updates_aur=0
+    fi
+
+    updates=$(("$updates_arch" + "$updates_aur"))
+
+    echo "$PREFIX $updates"
+}
+
+updates
