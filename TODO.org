@@ -12,21 +12,22 @@ Each module writes to stdout.
 * Todo List
 
 Modules:
-- [x] Time
-- [x] Date
-- [ ] Weather
-- [x] Arch Updates
-- [ ] MPD
-- [ ] Disk Usage
-- [ ] Mail
-- [ ] CPU Usage
-- [ ] Temperature
-- [ ] Volume
-- [ ] Bluetooth
-- [ ] Network
-- [ ] Temperature
-- [ ] Battery
+- MPD
+- Disk Usage
+- Mail
+- CPU Usage
+- Temperature
+- Volume
+- Network
+- Temperature
+- Battery
+
+Finished Modules:
+- Weather
+- Bluetooth
+- Arch Updates
+- Time
+- Date
 
 Scripts
-- [ ] /usr/bin/dwmbar
-- [ ] /home/$USER/.config/dwmbarrc
+- Modules that don't output anything shouldn't get a separator.
