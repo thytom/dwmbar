@@ -1,0 +1,35 @@
+#!/bin/bash
+
+get_battery()
+{
+    if [ -d /sys/class/power_supply/BAT? ]; then
+        ac_adapter=$(cat /sys/class/power_supply/BAT?/status)
+        if [ "$ac_adapter" == "Charging" ]; then
+            echo ""
+        fi
+
+        # Will show all batteries with approximate icon for remaining power.
+        for x in /sys/class/power_supply/BAT?/capacity;
+        do
+            case "$(cat $x)" in
+                100)            echo ""            ;;
+                9[0-9])         echo " $(cat $x)%" ;;
+                8[0-9]|7[0-9])  echo " $(cat $x)%" ;;
+                6[0-9]|5[0-9])  echo " $(cat $x)%" ;;
+                4[0-9]|3[0-9])  echo " $(cat $x)%" ;;
+                2[0-9]|1[0-9])  if [ "$ac_adapter" == "Charging" ]; then
+                                    echo " $(cat $x)%"
+                                else
+                                    echo "   $(cat $x)%"
+                                fi ;;
+                [0-9])          if [ "$ac_adapter" == "Charging" ]; then
+                                    echo " $(cat $x)%"
+                                else
+                                    echo "   $(cat $x)%"
+                                fi ;;
+                esac
+        done
+    fi
+}
+
+get_battery

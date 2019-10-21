@@ -17,3 +17,5 @@ get_bluetooth()
         #echo ""
     fi
 }
+
+get_bluetooth
