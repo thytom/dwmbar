@@ -4,7 +4,13 @@
 
 get_weather()
 {
-    LOCATION=$(geolocate)
+    LOCATION=$(curl -s http://ip-api.com/json | \
+        jq '.lat, .lon' | \
+        while read -r LATITUDE; do
+                read -r LONGITUDE
+                echo "${LATITUDE}:${LONGITUDE}" | tr -d '"'
+        done)
+    
     LANG="en"
     UNITS="Metric"
     API_KEY="756edce7e9d4c385ef9499a53492678c"
