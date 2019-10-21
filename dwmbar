@@ -1,7 +1,7 @@
 #!/bin/bash
 VERSION="0.0.1"
 
-RC_LOCATION="./dwmbarrc"
+RC_LOCATION="/home/$USER/.config/dwmbar/dwmbarrc"
 
 if [[ -f $DEFAULT_RC_LOCATION ]]; then
 	>&2 echo "No dwmbarrc found."
