@@ -11,10 +11,12 @@ fi
 
 install()
 {
-	cp "./dwmbar /usr/bin/dwmbar"
+	cp "./dwmbar" "/usr/bin/dwmbar"
 
 	mkdir -p "$CONFIG_DIR"
 
 	[[ ! -f "$MODULES_DIR" ]] && cp  -r "./modules" "$CONFIG_DIR/modules"
 	[[ ! -f "$DWMBARRC" ]] && cp "./dwmbarrc" "$DWMBARRC"
 }
+
+install

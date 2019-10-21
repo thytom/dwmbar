@@ -16,10 +16,12 @@ Modules:
 - Disk Usage
 - Mail
 - CPU Usage
-- Network
 - Volume Bar
+- Backlight
+- Memory Usage
 
 Finished Modules:
+- Network
 - Volume
 - Battery
 - Temperature
@@ -30,4 +32,5 @@ Finished Modules:
 - Date
 
 Scripts
+- Individual module delays.
 - Modules that don't output anything shouldn't get a separator.

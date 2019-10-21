@@ -2,8 +2,8 @@
 
 # Example file, designed to be edited.
 
+DELAY=5
 MODULES_DIR="modules/"
-
 SEPARATOR=" | "
 
 MODULES="wifi internet bluetooth volume temperature date time battery"
@@ -17,8 +17,8 @@ run_modules(){
 
 run(){
 	run_modules
-	sleep 5; # Delays script before it's called again
 	echo $OUTPUT
+	sleep $DELAY;
 }
 
 run
