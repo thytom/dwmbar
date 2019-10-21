@@ -1,6 +1,17 @@
 #+TITLE:TODO.org
 
-* Modules To Do
+
+* Structure
+Main shell script, calls each module one by one, in the order specified.
+Each module writes to stdout.
+
+/usr/bin/dwmbar
+/home/$USER/.config/dwmbar/dwmbarrc
+/home/$USER/.config/dwmbar/modules/
+
+* Todo List
+
+Modules:
 [ ] - Date
 [ ] - Weather
 [ ] - Updates
@@ -15,10 +26,6 @@
 [ ] - Temperature
 [ ] - Battery
 
-* Structure
-Main shell script, calls each module one by one, in the order specified.
-Each module writes to stdout.
-
-/usr/bin/dwmbar
-/home/$USER/.config/dwmbar/dwmbarrc
-/home/$USER/.config/dwmbar/modules/
+Scripts
+[ ] - /usr/bin/dwmbar
+[ ] - /home/$USER/.config/dwmbarrc

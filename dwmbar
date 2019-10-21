@@ -1,0 +1,16 @@
+#!/bin/bash
+VERSION="0.0.1"
+
+RC_LOCATION="/home/$USER/.config/dwmbar/dwmbarrc"
+
+if [[ -f $DEFAULT_RC_LOCATION ]]; then
+	>&2 echo "No dwmbarrc found."
+	exit 1
+fi
+
+print_help(){
+echo "dwmbar $VERSION"
+
+}
+
+xsetroot -name "$(exec $RC_LOCATION)"

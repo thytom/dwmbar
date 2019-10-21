@@ -1,0 +1,10 @@
+#!/bin/bash
+
+modules(){
+}
+
+run(){
+	echo "Test"
+}
+
+run
