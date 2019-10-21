@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Prints out the date
+
+PREFIX_ICON=''
+
+echo "$PREFIX_ICON $(date '+%d-%m-%y (%a)')"
+
