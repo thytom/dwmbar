@@ -8,7 +8,7 @@ WIFI_LOW_ICON=''
 
 get_wifi() 
 {
-        if grep -q wlan* "/proc/net/wireless"; then
+        if grep -q wl* "/proc/net/wireless"; then
                 # Wifi quality percentage
                 percentage=$(grep "^\s*w" /proc/net/wireless | awk '{ print "", int($3 * 100 / 70)}'| xargs)
                 case $percentage in
