@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Prints out if there is an internet connection
+
+INTERNET_ICON=''
+
+get_internet()
+{
+    echo "$INTERNET_ICON"
+}
+
+get_internet
+
