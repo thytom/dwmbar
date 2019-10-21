@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Outputs sun if its daytime and moon if its nighttime
+# Requires the redshift package
+
+SUN_ICON='盛'
+MOON_ICON=''
+
+get_sunmoon()
+{
+    if [[ $(redshift -p | grep "Period" | awk '{print $2}') == "Night" ]]; then
+        echo "$MOON_ICON"
+    else
+        echo "$SUN_ICON"
+    fi
+}
+
+get_sunmoon
