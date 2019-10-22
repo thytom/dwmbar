@@ -6,6 +6,11 @@ CUSTOM_DIR="$MODULES_DIR/custom"
 DWMBARRC="$CONFIG_DIR/dwmbarrc"
 DWMBAR="/usr/bin/dwmbar"
 
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit 0
+fi
+
 if [[ ! -f "dwmbar" ]]; then
 	echo "dwmbar executable not found."
 fi
