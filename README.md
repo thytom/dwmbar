@@ -12,14 +12,14 @@ dwmbar, which can be installed with your favourite aur helper, or manually.
 
 Please see the [archwiki
 page](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages)
-for how to manually install packages.
+for how to manually install AUR packages.
 
 ## Manual Installation
 
 ```bash
 $ git clone https://github.com/thytom/dwmbar
 $ cd dwmbar
-$ sudo install.sh
+$ sudo ./install.sh
 ```
 # Usage
 
@@ -54,13 +54,13 @@ move the bar away from the right edge, or even text. By default, we set
 
 ### About dwmbarrc
 
-**Because we expect people to modify `dwmbarrc`, and so we will never update
-it. dwmbar will automatically create it if it is not there, but once it is
-there, it must be deleted for another up-to-date version to be given.**
+**Because we expect people to modify `dwmbarrc`, we will never update it.
+dwmbar will automatically create it if it is not there, but once it is there,
+it must be deleted for another up-to-date version to be given.**
 
 Interestingly, so long as dwmbarrc prints *something* to stdout, it does not
 matter what it's written in, or what it does. So if you want to write your own
-implementation and use that, go nuts :smile:.
+implementation and use that, go nuts.
 
 ## Writing Modules
 
@@ -77,32 +77,29 @@ Modules can be written in any language, so long as they are executable and
 print their output to stdout.
 
 Currently available default modules are:
-- archupdates		Gets the number of updates available **Arch Linux Only**
-- backlight			Shows the brightness of the screen
-- battery			Gets battery percentage
-- bluetooth			Shows bluetooth status
-- cpuload			Shows the CPU load in %
-- date				Shows the calendar date
-- daypercentage		Shows how far through the day you are, in %
-- disksize			Shows the disk usage
-- ethernet			Shows ethernet connection
-- internet			Shows whether internet is available (TODO)
-- mail				Shows how much mail you have
-- mpd				Shows MPD status
-- ram				Shows RAM usage
-- redshift			Shows current screen temperature from Redshift
-- sunmoon			Displays a sun or moon for time of day
-- temperature		Displays the temperature of the CPU
-- time				Displays time
-- todo				Prints the number of todos for the "t" todo manager
-- tor				Prints if the tor service is enabled
-- volume			Prints volume in %
-- volumebar			Displays a volume bar
-- weather			Shows weather info
-- wifi				Shows wifi connection
-
-
-
+- archupdates		&tab&tabGets the number of updates available **Arch Linux Only**
+- backlight			&tab&tabShows the brightness of the screen
+- battery			&tab&tabGets battery percentage
+- bluetooth			&tab&tabShows bluetooth status
+- cpuload			&tab&tabShows the CPU load in %
+- date				&tab&tabShows the calendar date
+- daypercentage		&tab&tabShows how far through the day you are, in %
+- disksize			&tab&tabShows the disk usage
+- ethernet			&tab&tabShows ethernet connection
+- internet			&tab&tabShows whether internet is available (TODO)
+- mail				&tab&tabShows how much mail you have
+- mpd				&tab&tabShows MPD status
+- ram				&tab&tabShows RAM usage
+- redshift			&tab&tabShows current screen temperature from Redshift
+- sunmoon			&tab&tabDisplays a sun or moon for time of day
+- temperature		&tab&tabDisplays the temperature of the CPU
+- time				&tab&tabDisplays time
+- todo				&tab&tabPrints the number of todos for the "t" todo manager
+- tor				&tab&tabPrints if the tor service is enabled
+- volume			&tab&tabPrints volume in %
+- volumebar			&tab&tabDisplays a volume bar
+- weather			&tab&tabShows weather info
+- wifi				&tab&tabShows wifi connection
 
 # Possible Features
 
