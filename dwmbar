@@ -2,16 +2,25 @@
 VERSION="0.0.1"
 
 RC_LOCATION="/home/$USER/.config/dwmbar/dwmbarrc"
-
-if [[ -f $DEFAULT_RC_LOCATION ]]; then
-	>&2 echo "No dwmbarrc found."
-	exit 1
-fi
+CONFIG_DIR="/home/$USER/.config/dwmbar"
+MODULES_DIR="$CONFIG_DIR/modules"
+CUSTOM_DIR="$MODULES_DIR/custom"
+DWMBARRC="$CONFIG_DIR/dwmbarrc"
+CACHE_DIR="$CONFIG_DIR/.cache"
 
 print_help(){
-echo "dwmbar $VERSION"
-
+	echo "dwmbar $VERSION"
 }
+
+install_files(){
+	[[ ! -d $CONFIG_DIR ]] && cp -r /usr/share/dwmbar $CONFIG_DIR
+	[[ ! -f $DWMBARRC ]] && cp /usr/share/dwmbar/dwmbarrc $DWMBARRC
+	[[ ! -d $MODULES_DIR ]] && cp /usr/share/dwmbar/modules $MODULES_DIR
+	[[ ! -d $CUSTOM_DIR ]] && mkdir $CUSTOM_DIR
+	[[ ! -d $CACHE_DIR ]] && mkdir $CACHE_DIR
+}
+
+install_files
 
 while :; do
 	xsetroot -name "$(exec $RC_LOCATION)"
