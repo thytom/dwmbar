@@ -1,5 +1,6 @@
 dwmbar - A Modular Status Bar for dwm
 =====================================
+[Example image](res/example.png)
 
 dwmbar is a very simple status bar written for dwm.
 
