@@ -15,6 +15,7 @@ Each module writes to stdout.
 
 Bugs to fix
 - Sometimes double |
+- Cpuload module is way too slow. fix. (archie)
 - Status bar starts to close to screen (add space)
 
 Modules to Write:
