@@ -14,7 +14,7 @@ run_modules(){
 		[[ ! "$OUTPUT" = "" ]] && OUTPUT="$OUTPUT$SEPARATOR"
 		if [[ -f "$CUSTOM_DIR$module" ]]; then
 			OUTPUT="$OUTPUT$(exec $CUSTOM_DIR$module)"
-		elif
+		else
 			OUTPUT="$OUTPUT$(exec $MODULES_DIR$module)"
 		fi
 	done
