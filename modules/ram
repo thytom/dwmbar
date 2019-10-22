@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Prints the total ram and used ram in Mb
+
+PREFIX='﬙ '
+
+get_ram()
+{
+    TOTAL_RAM=$(free -m | awk  {'print $2'} | head -n 2 | tail -1)
+    FREE_RAM=$(free -m | awk  {'print $3'} | head -n 2 | tail -1)
+    MB="MB"
+
+    echo "$PREFIX$FREE_RAM/$TOTAL_RAM$MB"
+}
+
+get_ram
