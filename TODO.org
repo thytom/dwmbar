@@ -16,7 +16,7 @@ Each module writes to stdout.
 Bugs to fix
 - Sometimes double |
 - Cpuload module is way too slow. fix. (archie)
-- Status bar starts to close to screen (add space)
+- Status bar starts to close to screen (add space) (archie)
 
 Modules to Write:
 *We are more than welcome to accept ideas and pull requests for future

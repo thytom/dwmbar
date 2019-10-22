@@ -2,31 +2,42 @@
 
 # Example file, designed to be edited.
 
-DELAY=5
+DELAY=0.05
 MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
-CUSTOM_DIR="$MODULES_DIR/custom/"
+CUSTOM_DIR="/home/$USER/.config/dwmbar/modules/custom/"
 SEPARATOR=" | "
+PADDING=" "
 
-# Add and remove modules here
-# Modules that dont require an internet conneciton
-OFFLINE_MODULES="wifi internet bluetooth volume temperature date time battery"
-# Modules that require an internet connection
-ONLINE_MODULES=""
+OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
+OUTPUT=""
 
-run_modules(){
+MODULES="mpd volumebar wifi redshift disksize ram temperature date time battery"
+
+get_bar(){
 	for module in $MODULES; do
-		[[ ! "$OUTPUT" = "" ]] && OUTPUT="$OUTPUT$SEPARATOR"
-		if [[ -f "$CUSTOM_DIR$module" ]]; then
-			OUTPUT="$OUTPUT$(exec $CUSTOM_DIR$module)"
-		else
-			OUTPUT="$OUTPUT$(exec $MODULES_DIR$module)"
-		fi
+		module_out=$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')
+		bar=$bar$module_out
 	done
+	echo $bar | sed 's/.$//g'
+}
+
+run_module(){
+	if [[ -f "$CUSTOM_DIR$1" ]]
+	then
+		out="$(exec $CUSTOM_DIR$1)"
+	else
+		out="$(exec $MODULES_DIR$1)"
+	fi
+
+	[[ ! "$out" = "" ]] && [[ ! "$module" = "NULL" ]] && out="$out$SEPARATOR."
+	echo $out > "$OUTPUT_CACHE$module"
 }
 
 run(){
-	run_modules
-	echo $OUTPUT
+	for module in $MODULES; do
+		run_module $module
+	done
+	get_bar
 	sleep $DELAY;
 }
 
