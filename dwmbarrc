@@ -8,7 +8,10 @@ CUSTOM_DIR="$MODULES_DIR/custom/"
 SEPARATOR=" | "
 
 # Add and remove modules here
-MODULES="wifi internet bluetooth volume temperature date time battery"
+# Modules that dont require an internet conneciton
+OFFLINE_MODULES="wifi internet bluetooth volume temperature date time battery"
+# Modules that require an internet connection
+ONLINE_MODULES=""
 
 run_modules(){
 	for module in $MODULES; do
