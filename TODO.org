@@ -11,6 +11,7 @@ Each module writes to stdout.
 
 * Todo List
 - Different file for customizable stuff
+- Add --rootdir option to install script
 
 Bugs to fix
 - Sometimes double |
