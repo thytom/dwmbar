@@ -7,6 +7,7 @@ MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
 CUSTOM_DIR="$MODULES_DIR/custom/"
 SEPARATOR=" | "
 
+# Add and remove modules here
 MODULES="wifi internet bluetooth volume temperature date time battery"
 
 run_modules(){
