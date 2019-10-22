@@ -18,7 +18,7 @@ Bugs to fix
 - Status bar starts to close to screen (add space)
 
 Modules to Write:
-*We are more than wellcome to accept ideas and pull requests for future
+*We are more than welcome to accept ideas and pull requests for future
 modules!
 
 Working Modules:
