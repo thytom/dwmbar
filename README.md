@@ -144,5 +144,13 @@ Currently available default modules are:
 - weather			- Shows weather info
 - wifi				- Shows wifi connection
 
-# Possible Features
+# Feature Wishlist
 
+* Paralellised Modules
+	- Some modules are slower than others. Have modules set a DELAY variable;
+		if they don't have one, use a default.
+	- Modules are called and bar is updated when a module finishes, but an
+		internal bar clock updates the clock at a specific delay.
+* Don't call internet modules when offline
+	- Have modules state if they require an internet connection and ignore them
+		if no connection exists.
