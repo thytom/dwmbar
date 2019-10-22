@@ -3,8 +3,8 @@
 # Example file, designed to be edited.
 
 DELAY=5
-MODULES_DIR="modules/"
-CUSTOM_DIR="modules/custom/"
+MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
+CUSTOM_DIR="$MODULES_DIR/custom/"
 SEPARATOR=" | "
 
 MODULES="wifi internet bluetooth volume temperature date time battery"
