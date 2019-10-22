@@ -11,13 +11,19 @@ Each module writes to stdout.
 
 * Todo List
 
+Bugs to fix
+- Sometimes double |
+- Status bar starts to close to screen (add space)
+
 Modules to Write:
 - Disk Usage
-- Mail
 - CPU Usage
 - Memory Usage
 
 Working Modules:
+- Todo
+- Tor
+- Mail
 - Volume Bar
 - MPD
 - Backlight
