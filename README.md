@@ -77,29 +77,29 @@ Modules can be written in any language, so long as they are executable and
 print their output to stdout.
 
 Currently available default modules are:
-- archupdates		&tab&tabGets the number of updates available **Arch Linux Only**
-- backlight			&tab&tabShows the brightness of the screen
-- battery			&tab&tabGets battery percentage
-- bluetooth			&tab&tabShows bluetooth status
-- cpuload			&tab&tabShows the CPU load in %
-- date				&tab&tabShows the calendar date
-- daypercentage		&tab&tabShows how far through the day you are, in %
-- disksize			&tab&tabShows the disk usage
-- ethernet			&tab&tabShows ethernet connection
-- internet			&tab&tabShows whether internet is available (TODO)
-- mail				&tab&tabShows how much mail you have
-- mpd				&tab&tabShows MPD status
-- ram				&tab&tabShows RAM usage
-- redshift			&tab&tabShows current screen temperature from Redshift
-- sunmoon			&tab&tabDisplays a sun or moon for time of day
-- temperature		&tab&tabDisplays the temperature of the CPU
-- time				&tab&tabDisplays time
-- todo				&tab&tabPrints the number of todos for the "t" todo manager
-- tor				&tab&tabPrints if the tor service is enabled
-- volume			&tab&tabPrints volume in %
-- volumebar			&tab&tabDisplays a volume bar
-- weather			&tab&tabShows weather info
-- wifi				&tab&tabShows wifi connection
+- archupdates		- Gets the number of updates available **Arch Linux Only**
+- backlight			- Shows the brightness of the screen
+- battery			- Gets battery percentage
+- bluetooth			- Shows bluetooth status
+- cpuload			- Shows the CPU load in %
+- date				- Shows the calendar date
+- daypercentage		- Shows how far through the day you are, in %
+- disksize			- Shows the disk usage
+- ethernet			- Shows ethernet connection
+- internet			- Shows whether internet is available (TODO)
+- mail				- Shows how much mail you have
+- mpd				- Shows MPD status
+- ram				- Shows RAM usage
+- redshift			- Shows current screen temperature from Redshift
+- sunmoon			- Displays a sun or moon for time of day
+- temperature		- Displays the temperature of the CPU
+- time				- Displays time
+- todo				- Prints the number of todos for the "t" todo manager
+- tor				- Prints if the tor service is enabled
+- volume			- Prints volume in %
+- volumebar			- Displays a volume bar
+- weather			- Shows weather info
+- wifi				- Shows wifi connection
 
 # Possible Features
 
