@@ -6,7 +6,7 @@ DELAY=0.05
 MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
 CUSTOM_DIR="/home/$USER/.config/dwmbar/modules/custom/"
 SEPARATOR=" | "
-PADDING=" "
+PADDING="$USER@$HOSTNAME "
 
 OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 OUTPUT=""
@@ -18,7 +18,9 @@ get_bar(){
 		module_out=$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')
 		bar=$bar$module_out
 	done
-	echo $bar | sed 's/.$//g'
+	# Uncomment to remove last separator
+	# bar=$(echo $bar | sed 's/.$//g')
+	echo "$bar$PADDING"
 }
 
 run_module(){
