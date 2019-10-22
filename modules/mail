@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Prints number of unread mail
+# Requires mutt/neomutt
+
+MAIL_DIR="/home/$USER/Mail/INBOX/new/*"
+PREFIX=' :'
+
+get_mail()
+{
+	echo "$PREFIX$(du -a $MAIL_DIR 2>/dev/null | wc -l)"
+}
+
+get_mail
