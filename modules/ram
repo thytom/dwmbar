@@ -2,7 +2,7 @@
 
 # Prints the total ram and used ram in Mb
 
-PREFIX='﬙ '
+PREFIX=' '
 
 get_ram()
 {
