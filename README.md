@@ -6,6 +6,48 @@ dwmbar is a very simple status bar written for dwm.
 
 # Installation
 
+## Prerequisites
+
+While some modules will work without these dependencies, we recommend grabbing
+the ones you want for specific modules.
+
+Highly Recommended:
+* Any patched Nerd Font for icons.
+
+Optional (By module):
+ * archupdates
+	- Arch Linux
+	- yay
+	- pacman-contrib
+* backlight
+	- light
+* bluetooth
+	- bluez
+* mail
+	- mutt/neomutt (We recommend [Luke Smith's Mutt-Wizard](https://github.com/LukeSmithxyz/mutt-wizard)) for configuration.
+* mpd
+	- mpd
+	- mpc
+* redshift
+	- redshift
+* sunmoon
+	- redshift
+* temperature
+	- lm_sensors
+* todo
+	- [t todo manager](https://github.com/sjl/t)
+* tor
+	- tor
+* volume
+	- pulseaudio
+* volumebar
+	- pulseaudio
+* weather
+	- curl
+	- Internet connection
+* wifi
+	- Wifi card
+
 ## Arch Linux
 
 There is an [AUR package](https://aur.archlinux.org/packages/dwmbar) for
