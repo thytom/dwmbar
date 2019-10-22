@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Prints number of todos
+# Requires t todo manager (https://github.com/sjl/t)
+
+TASKS_DIR="/home/$USER/.todo"
+TASKS_NAME="tasks"
+PREFIX=': '
+
+get_todo()
+{
+echo "$PREFIX$(t --task-dir $TASKS_DIR --list $TASKS_NAME | wc -l)"
+}
+
+get_todo
