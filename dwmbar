@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.0.1"
+VERSION="0.1"
 
 RC_LOCATION="/home/$USER/.config/dwmbar/dwmbarrc"
 CONFIG_DIR="/home/$USER/.config/dwmbar"
@@ -9,10 +9,13 @@ DWMBARRC="$CONFIG_DIR/dwmbarrc"
 CACHE_DIR="$CONFIG_DIR/.cache"
 
 print_help(){
-	echo "dwmbar $VERSION"
+	echo "dwmbar $VERSION
+-v	Display this help message.
+-c	Copy default files to /home/$USER/.config/dwmbar
+"
 }
 
-install_files(){
+copy_usr_to_home(){
 	[[ ! -d $CONFIG_DIR ]] && cp -r /usr/share/dwmbar $CONFIG_DIR
 	[[ ! -f $DWMBARRC ]] && cp /usr/share/dwmbar/dwmbarrc $DWMBARRC
 	[[ ! -d $MODULES_DIR ]] && cp /usr/share/dwmbar/modules $MODULES_DIR
@@ -20,7 +23,14 @@ install_files(){
 	[[ ! -d $CACHE_DIR ]] && mkdir $CACHE_DIR
 }
 
-install_files
+while getopts 'v' flag; do
+	case "${flag}" in
+		v) 	print_help
+			exit 0				;;
+		c)	copy_usr_to_home
+			exit 0				;;
+	esac
+done
 
 while :; do
 	xsetroot -name "$(exec $RC_LOCATION)"
