@@ -15,38 +15,9 @@ Highly Recommended:
 * Any patched Nerd Font for icons.
 
 Optional (By module):
- * archupdates
-	- Arch Linux
-	- yay
-	- pacman-contrib
-* backlight
-	- light
-* bluetooth
-	- bluez
-* mail
-	- mutt/neomutt (We recommend [Luke Smith's Mutt-Wizard](https://github.com/LukeSmithxyz/mutt-wizard)) for configuration.
-* mpd
-	- mpd
-	- mpc
-* redshift
-	- redshift
-* sunmoon
-	- redshift
-* temperature
-	- lm_sensors
-* todo
-	- [t todo manager](https://github.com/sjl/t)
-* tor
-	- tor
-* volume
-	- pulseaudio
-* volumebar
-	- pulseaudio
-* weather
-	- curl
-	- Internet connection
-* wifi
-	- Wifi card
+
+See [module prerequisites][Module Prerequisites]
+
 
 ## Arch Linux
 
@@ -144,6 +115,42 @@ Currently available default modules are:
 - weather			- Shows weather info
 - wifi				- Shows wifi connection
 
+## Module Prerequisites
+
+See Module Dependencies
+ * archupdates
+	- Arch Linux
+	- yay
+	- pacman-contrib
+* backlight
+	- light
+* bluetooth
+	- bluez
+* mail
+	- mutt/neomutt (We recommend [Luke Smith's Mutt-Wizard](https://github.com/LukeSmithxyz/mutt-wizard)) for configuration.
+* mpd
+	- mpd
+	- mpc
+* redshift
+	- redshift
+* sunmoon
+	- redshift
+* temperature
+	- lm_sensors
+* todo
+	- [t todo manager](https://github.com/sjl/t)
+* tor
+	- tor
+* volume
+	- pulseaudio
+* volumebar
+	- pulseaudio
+* weather
+	- curl
+	- Internet connection
+* wifi
+	- Wifi card
+
 # Feature Wishlist
 
 * Paralellised Modules
@@ -151,6 +158,3 @@ Currently available default modules are:
 		if they don't have one, use a default.
 	- Modules are called and bar is updated when a module finishes, but an
 		internal bar clock updates the clock at a specific delay.
-* Don't call internet modules when offline
-	- Have modules state if they require an internet connection and ignore them
-		if no connection exists.
