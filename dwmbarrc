@@ -11,30 +11,32 @@ PADDING="$USER@$HOSTNAME "
 OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 OUTPUT=""
 
-# All modules that you want present in the status bar
-MODULES="mpd volumebar wifi redshift disksize ram temperature date time battery"
+# What modules, in what order
+MODULES="mpd weather volumebar wifi internet cpuload temperature battery date time"
+
 # Modules that require an active internet connection
-ONLINE_MODULES="weather"
+ONLINE_MODULES="weather internet"
 
-
-INTERNET=false
+INTERNET=1 #0 being true
 
 get_internet()
 {
     curl -q http://google.com &> /dev/null
 
-    if [ $? -eq 0 ]; then
-        $INTERNET=true
+    if [[ $? -eq 0 ]]; then
+        INTERNET=0
     else
-        $INTERNET=false
+        INTERNET=1
     fi
 }
 
 get_bar()
 {
 	for module in $MODULES; do
-		module_out=$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')
-		bar=$bar$module_out
+		if [[ $INTERNET -eq 0 ]] || [[ $ONLINE_MODULES != *"$module"* ]];then
+			module_out=$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')
+			bar=$bar$module_out
+		fi
 	done
 	# Uncomment to remove last separator
 	# bar=$(echo $bar | sed 's/.$//g')
@@ -58,7 +60,11 @@ run()
 {
     get_internet
 	for module in $MODULES; do
-		run_module $module
+		if [[ $INTERNET -eq 0 ]]; then
+			run_module $module
+		else
+			[[ $ONLINE_MODULES != *"$module"* ]] && run_module $module
+		fi
 	done
 	get_bar
 	sleep $DELAY;
