@@ -3,12 +3,13 @@
 DWMBAR="/usr/bin/dwmbar"
 
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
+  then echo "Please run as root" > /dev/stderr
   exit 1
 fi
 
 if [[ ! -f "dwmbar" ]]; then
-	echo "dwmbar executable not found."
+	echo "dwmbar executable not found." > /dev/stderr
+	exit 1
 fi
 
 # Create /usr/share/dwmbar
