@@ -6,7 +6,27 @@ PREFIX=' '
 
 get_load()
 {
-   echo "$PREFIX$( printf "%.0f" $(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1); }' <(grep 'cpu ' /proc/stat) <(sleep 1;grep 'cpu ' /proc/stat)) )%"
+  # Get the first line with aggregate of all CPUs
+  cpu_last=($(head -n1 /proc/stat))
+  cpu_last_sum="${cpu_last[@]:1}"
+  cpu_last_sum=$((${cpu_last_sum// /+}))
+
+  sleep 0.05
+
+  cpu_now=($(head -n1 /proc/stat))
+  cpu_sum="${cpu_now[@]:1}"
+  cpu_sum=$((${cpu_sum// /+}))
+
+  cpu_delta=$((cpu_sum - cpu_last_sum))
+  cpu_idle=$((cpu_now[4]- cpu_last[4]))
+  cpu_used=$((cpu_delta - cpu_idle))
+  cpu_usage=$((100 * cpu_used / cpu_delta))
+
+  # Keep this as last for our next read
+  cpu_last=("${cpu_now[@]}")
+  cpu_last_sum=$cpu_sum
+
+  echo "$PREFIX$cpu_usage%"
 }
 
 get_load
