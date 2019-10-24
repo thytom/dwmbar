@@ -12,6 +12,7 @@ Each module writes to stdout.
 * Todo List
 - Different file for customizable stuff
 - dwmbar uses /usr/bin/dwmbarrc if no .config/dwmbar/dwmbarrc exists.
+- Delay in archupdates module (if minutes divisible by 5/4)
 
 Bugs to fix:
 None
