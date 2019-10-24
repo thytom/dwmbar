@@ -19,13 +19,15 @@ VERSION="0.1"
 
 DEFAULT_CONFIG_DIR="/usr/share/dwmbar"
 DEFAULT_MODULES_DIR="$DEFAULT_CONFIG_DIR/modules"
-DEFAULT_RC_LOCATION="$DEFAULT_CONFIG_DIR/dwmbarrc"
+DEFAULT_RC_LOCATION="$DEFAULT_CONFIG_DIR/bar.sh"
+DEFAULT_CONFIG_LOCATION="$DEFAULT_CONFIG_DIR/config"
 
-RC_LOCATION="/home/$USER/.config/dwmbar/dwmbarrc"
+RC_LOCATION="/home/$USER/.config/dwmbar/bar.sh"
 CONFIG_DIR="/home/$USER/.config/dwmbar"
 MODULES_DIR="$CONFIG_DIR/modules"
 CUSTOM_DIR="$MODULES_DIR/custom"
-DWMBARRC="$CONFIG_DIR/dwmbarrc"
+DWMBARRC="$CONFIG_DIR/bar.sh"
+CONFIG_FILE="$CONFIG_DIR/config"
 CACHE_DIR="$CONFIG_DIR/.cache"
 
 print_help(){
@@ -37,7 +39,8 @@ print_help(){
 
 copy_usr_to_home(){
 	[[ ! -d $CONFIG_DIR ]] && cp -r /usr/share/dwmbar $CONFIG_DIR
-	[[ ! -f $DWMBARRC ]] && cp /usr/share/dwmbar/dwmbarrc $DWMBARRC
+	[[ ! -f $DWMBARRC ]] && cp /usr/share/dwmbar/bar.sh $DWMBARRC
+    [[ ! -f $CONFIG_FILE ]] && cp /usr/share/dwmbar/config $CONFIG_FILE
 	[[ ! -d $MODULES_DIR ]] && cp /usr/share/dwmbar/modules $MODULES_DIR
 	[[ ! -d $CUSTOM_DIR ]] && mkdir $CUSTOM_DIR
 	[[ ! -d $CACHE_DIR ]] && mkdir $CACHE_DIR
@@ -58,9 +61,14 @@ check_files(){
 		echo "$DEFAULT_RC_LOCATION does not exist." > /dev/stderr
 		exit 1
 	fi
+
+    if [[ ! -f $DEFAULT_CONFIG_LOCATION ]]; then
+        echo "$DEFAULT_CONFIG_LOCATION does not exist." > /dev/stderr
+        exit 1
+    fi
 }
 
-while getopts 'v' flag; do
+while getopts 'vc' flag; do
 	case "${flag}" in
 		v) 	print_help
 			exit 0				;;
