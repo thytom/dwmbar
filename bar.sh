@@ -15,7 +15,6 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 MODULES_DIR="/usr/share/dwmbar/modules/"
 
 OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
@@ -67,8 +66,9 @@ run()
 {
     get_internet
 	for module in $MODULES; do
-		if [[ $INTERNET -eq 0 ]]; then
-			run_module $module
+		pgrep $module &> /dev/null
+		if [[ $INTERNET -eq 0 ]] && [[ $? -eq 1 ]]; then
+			run_module $module &
 		else
 			[[ $ONLINE_MODULES != *"$module"* ]] && run_module $module
 		fi
