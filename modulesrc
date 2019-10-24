@@ -1,0 +1,17 @@
+# What modules, in what order
+MODULES="mpd weather volumebar wifi internet cpuload temperatu
+
+# Modules that require an active internet connection
+ONLINE_MODULES="weather internet"
+
+# Delay between showing the status bar
+DELAY="0.05"
+
+# Where the custom modules are stored
+CUSTOM_DIR="/home/$USER/.config/dwmbar/modules/custom/"
+
+# Separator between modules
+SEPARATOR=" | "
+
+# Padding at the end and beggining of the status bar
+PADDING="$USER@$HOSTNAME "
