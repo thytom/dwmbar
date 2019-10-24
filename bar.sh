@@ -15,7 +15,7 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-CONFIG_NAME="modulesrc"
+CONFIG_NAME="config"
 
 DELAY=$(cat $CONFIG_NAME | grep -E "DELAY" | cut -d '"' -f2)
 MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
