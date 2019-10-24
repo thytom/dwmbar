@@ -1,5 +1,9 @@
+#!/bin/bash
+
+MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
+
 # What modules, in what order
-MODULES="mpd weather volumebar wifi internet cpuload temperature"
+MODULES="mpd weather volumebar wifi internet cpuload temperature date time"
 
 # Modules that require an active internet connection
 ONLINE_MODULES="weather internet"
@@ -14,4 +18,5 @@ CUSTOM_DIR="/home/$USER/.config/dwmbar/modules/custom/"
 SEPARATOR=" | "
 
 # Padding at the end and beggining of the status bar
-PADDING="$USER@$HOSTNAME "
+RIGHT_PADDING="$USER@$HOSTNAME "
+LEFT_PADDING="  "

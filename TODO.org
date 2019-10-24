@@ -17,7 +17,6 @@ Each module writes to stdout.
 - Have default modules in /usr/share/dwmbar and all the modules in the
   .config/dwmbar/modules override the default ones (no need to have a custom
   module dir)
-- Fix modules like temp cutting out when running
 
 Bugs to fix:
 None

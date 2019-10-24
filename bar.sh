@@ -15,22 +15,13 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
 CONFIG_FILE="/home/$USER/.config/dwmbar/config"
 
-DELAY=$(cat $CONFIG_FILE | grep -E "DELAY" | cut -d '"' -f2)
-MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
-CUSTOM_DIR=$(cat $CONFIG_FILE | grep -E "CUSTOM_DIR" | cut -d '"' -f2)
-SEPARATOR=$(cat $CONFIG_FILE | grep -E "SEPARATOR" | cut -d '"' -f2)
-PADDING=$(cat $CONFIG_FILE | grep -E "PADDING" | cut -d '"' -f2)
+source $CONFIG_FILE
 
 OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 OUTPUT=""
-
-# What modules, in what order
-MODULES=$(cat $CONFIG_FILE | grep -E "MODULES" | cut -d '"' -f2)
-
-# Modules that require an active internet connection
-ONLINE_MODULES=$(cat $CONFIG_FILE | grep -E "ONLINE_MODULES" | cut -d '"' -f2)
 
 INTERNET=1 #0 being true
 
@@ -55,7 +46,7 @@ get_bar()
 	done
 	# Uncomment to remove last separator
 	# bar=$(echo $bar | sed 's/.$//g')
-	echo "$bar$PADDING"
+	echo "$LEFT_PADDING$bar$RIGHT_PADDING"
 }
 
 run_module()
