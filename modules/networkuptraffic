@@ -1,11 +1,12 @@
 #!/bin/bash
 
-# Prints out the current up network traffic in DJNADJNA
+# Prints out the current up network traffic in MB
 
 PREFIX=' '
 
 get_up_traffic()
 {
+    DELTA=2
     TRANSMIT1=0
     TRANSMIT2=0
  
@@ -16,7 +17,7 @@ get_up_traffic()
         fi
     done
 
-    sleep 2
+    sleep $DELTA
 
     IFACES=$(ip -o link show | awk -F': ' '{print $2}')
     for IFACE in $IFACES; do
