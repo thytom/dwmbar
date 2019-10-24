@@ -1,7 +1,5 @@
 #!/bin/bash
 
-MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
-
 # What modules, in what order
 MODULES="mpd weather volumebar wifi internet cpuload temperature date time"
 

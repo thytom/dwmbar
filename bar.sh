@@ -16,12 +16,13 @@
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-CONFIG_FILE="/home/$USER/.config/dwmbar/config"
-
-source $CONFIG_FILE
+MODULES_DIR="/usr/share/dwmbar/modules/"
 
 OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 OUTPUT=""
+
+CONFIG_FILE="/home/$USER/.config/dwmbar/config"
+source $CONFIG_FILE
 
 INTERNET=1 #0 being true
 
