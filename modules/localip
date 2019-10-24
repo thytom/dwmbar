@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Prints out your local IP
+
+PREFIX='ﯱ '
+
+get_local_ip()
+{
+    echo "$PREFIX$(hostname -i)"
+}
+
+get_local_ip

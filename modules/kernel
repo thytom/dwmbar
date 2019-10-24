@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Prints out the kernel version
+
+PREFIX=' '
+
+get_kernel()
+{
+    echo "$PREFIX$(uname -r)"
+}
+
+get_kernel
