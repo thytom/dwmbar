@@ -4,7 +4,7 @@
 # Requires an internet connection
 # Depends on yay and checkupdates (pacman-contrib)
 
-PREFIX=' Updates:'
+PREFIX=' Updates: '
 
 get_updates() 
 {
@@ -18,7 +18,7 @@ get_updates()
 
     updates=$(("$updates_arch" + "$updates_aur"))
 
-    echo "$PREFIX $updates"
+    echo "$PREFIX$updates"
 }
 
 get_updates
