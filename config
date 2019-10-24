@@ -1,5 +1,5 @@
 # What modules, in what order
-MODULES="mpd weather volumebar wifi internet cpuload temperatu
+MODULES="mpd weather volumebar wifi internet cpuload temperature"
 
 # Modules that require an active internet connection
 ONLINE_MODULES="weather internet"
