@@ -13,6 +13,10 @@ Each module writes to stdout.
 - Different file for customizable stuff
 - dwmbar uses /usr/bin/dwmbarrc if no .config/dwmbar/dwmbarrc exists.
 - Delay in archupdates module (if minutes divisible by 5/4)
+- Add dependencies like bc
+- Have default modules in /usr/share/dwmbar and all the modules in the
+  .config/dwmbar/modules override the default ones (no need to have a custom
+  module dir)
 
 Bugs to fix:
 None

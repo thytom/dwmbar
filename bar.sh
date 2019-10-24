@@ -15,20 +15,14 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-DELAY=0.05
-MODULES_DIR="/home/$USER/.config/dwmbar/modules/"
-CUSTOM_DIR="/home/$USER/.config/dwmbar/modules/custom/"
-SEPARATOR=" | "
-PADDING="$USER@$HOSTNAME "
+
+MODULES_DIR="/usr/share/dwmbar/modules/"
 
 OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 OUTPUT=""
 
-# What modules, in what order
-MODULES="mpd weather volumebar wifi internet cpuload temperature battery date time"
-
-# Modules that require an active internet connection
-ONLINE_MODULES="weather internet"
+CONFIG_FILE="/home/$USER/.config/dwmbar/config"
+source $CONFIG_FILE
 
 INTERNET=1 #0 being true
 
@@ -53,7 +47,7 @@ get_bar()
 	done
 	# Uncomment to remove last separator
 	# bar=$(echo $bar | sed 's/.$//g')
-	echo "$bar$PADDING"
+	echo "$LEFT_PADDING$bar$RIGHT_PADDING"
 }
 
 run_module()

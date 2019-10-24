@@ -28,12 +28,18 @@ if [[ ! -f "dwmbar" ]]; then
 fi
 
 # Create /usr/share/dwmbar
-# Containing example dwmbarrc and modules
+# Containing example bar.sh and modules
 
 mkdir --parents "/usr/share/dwmbar/"
 
+echo "./modules --> /usr/share/dwmbar/modules"
 cp -r "./modules" "/usr/share/dwmbar/modules"
-cp -r "./dwmbarrc" "/usr/share/dwmbar/dwmbarrc"
+
+echo "./bar.sh --> /usr/share/dwmbar/bar.sh"
+cp "./bar.sh" "/usr/share/dwmbar/bar.sh"
+
+echo "./config --> /usr/share/dwmbar/config"
+cp -r "./config" "/usr/share/dwmbar/config"
 
 echo "./dwmbar --> /usr/bin/dwmbar"
 cp "./dwmbar" "/usr/bin/dwmbar"
