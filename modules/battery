@@ -2,43 +2,42 @@
 
 # Prints out battery percentage
 
-CHARGING_ICON=''
-WARNING_ICON=''
-BATTERY_FULL_ICON=''
-BATTERY_2_ICON=''
-BATTERY_3_ICON=''
-BATTERY_4_ICON=''
+CHARGING_ICON=' '
+WARNING_ICON=' '
+BATTERY_FULL_ICON=' '
+BATTERY_2_ICON=' '
+BATTERY_3_ICON=' '
+BATTERY_4_ICON=' '
+
+FULL_AT=98
+
+BAT_ICON=""
+ICON=""
 
 get_battery()
 {
-    if [ -d /sys/class/power_supply/BAT? ]; then
-        ac_adapter=$(cat /sys/class/power_supply/BAT?/status)
-        if [ "$ac_adapter" == "Charging" ]; then
-            echo "$CHARGING_ICON"
-        fi
+	# The vast majority of people only use one battery.
 
-        # Will show all batteries with approximate icon for remaining power.
-        for x in /sys/class/power_supply/BAT?/capacity;
-        do
-            case "$(cat $x)" in
-                100)            echo "$BATTERY_FULL_ICON"            ;;
-                9[0-9])         echo "$BATTERY_FULL_ICON $(cat $x)%" ;;
-                8[0-9]|7[0-9])  echo "$BATTERY_2_ICON $(cat $x)%" ;;
-                6[0-9]|5[0-9])  echo "$BATTERY_3_ICON $(cat $x)%" ;;
-                4[0-9]|3[0-9])  echo "$BATTERY_4_ICON $(cat $x)%" ;;
-                2[0-9]|1[0-9])  if [ "$ac_adapter" == "Charging" ]; then
-                                    echo "$BATTERY_4_ICON $(cat $x)%"
-                                else
-                                    echo "$WARNING_ICON  $BATTERY_4_ICON $(cat $x)%"
-                                fi ;;
-                [0-9])          if [ "$ac_adapter" == "Charging" ]; then
-                                    echo "$BATTERY_4_ICON $(cat $x)%"
-                                else
-                                    echo "$WARNING_ICON  $BATTERY_4_ICON $(cat $x)%"
-                                fi ;;
-                esac
-        done
-    fi
+	if [ -d /sys/class/power_supply/BAT0 ]; then
+		capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+		charging=$(cat /sys/class/power_supply/BAT0/status)
+		if [[ "$charging" == "Charging" ]]; then
+			ICON="$CHARGING_ICON"
+		elif [[ $capacity -le 25 ]]; then
+			ICON="$WARNING_ICON"
+		fi
+
+		if [[ $capacity -ge $FULL_AT ]]; then
+			BAT_ICON=$BATTERY_FULL_ICON
+		elif [[ $capacity -le 25 ]]; then
+			BAT_ICON=$BATTERY_4_ICON
+		elif [[ $capacity -le 50 ]]; then
+			BAT_ICON=$BATTERY_3_ICON
+		elif [[ $capacity -le $FULL_AT ]]; then
+			BAT_ICON=$BATTERY_2_ICON
+		fi
+	fi
+	echo "$ICON $BAT_ICON  $capacity%"
 }
 
 get_battery

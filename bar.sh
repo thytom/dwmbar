@@ -15,7 +15,6 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 MODULES_DIR="/usr/share/dwmbar/modules/"
 
 OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
@@ -41,8 +40,8 @@ get_bar()
 {
 	for module in $MODULES; do
 		if [[ $INTERNET -eq 0 ]] || [[ $ONLINE_MODULES != *"$module"* ]];then
-			module_out=$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')
-			bar=$bar$module_out
+			module_out="$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')"
+			bar="$bar$module_out"
 		fi
 	done
 	# Uncomment to remove last separator
@@ -60,15 +59,16 @@ run_module()
 	fi
 
 	[[ ! "$out" = "" ]] && [[ ! "$module" = "NULL" ]] && out="$out$SEPARATOR."
-	echo $out > "$OUTPUT_CACHE$module"
+	echo "$out" > "$OUTPUT_CACHE$module"
 }
 
 run()
 {
     get_internet
 	for module in $MODULES; do
-		if [[ $INTERNET -eq 0 ]]; then
-			run_module $module
+		pgrep $module &> /dev/null
+		if [[ $INTERNET -eq 0 ]] && [[ $? -eq 1 ]]; then
+			run_module $module &
 		else
 			[[ $ONLINE_MODULES != *"$module"* ]] && run_module $module
 		fi
