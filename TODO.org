@@ -12,8 +12,6 @@ Each module writes to stdout.
 * Todo List
 - Delay in archupdates module (if minutes divisible by 5/4)
 - Add dependencies like bc
-- Networkup/down modules in kb instead of mb? and change sleep to 1s so that
-  output is XMb/s
 
 Bugs to fix:
 None

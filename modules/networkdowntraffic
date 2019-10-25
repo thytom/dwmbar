@@ -6,7 +6,6 @@ PREFIX=' '
 
 get_down_traffic()
 {
-    DELTA=2
     RECIEVE1=0
     RECIEVE2=0
 
@@ -17,7 +16,7 @@ get_down_traffic()
         fi
     done
     
-    sleep $DELTA
+    sleep 1
 
     IFACES=$(ip -o link show | awk -F': ' '{print $2}')
     for IFACE in $IFACES; do
@@ -26,7 +25,7 @@ get_down_traffic()
         fi
     done
     
-    echo "$PREFIX$(expr $(expr $RECIEVE2 - $RECIEVE1 ) / 1000000)MB"
+    echo "$PREFIX$(expr $(expr $RECIEVE2 - $RECIEVE1 ) / 1000)KB/s"
 }
 
 get_down_traffic
