@@ -21,7 +21,7 @@ get_down_traffic()
     IFACES=$(ip -o link show | awk -F': ' '{print $2}')
     for IFACE in $IFACES; do
         if [ $IFACE != "lo" ]; then
-            RECIEVE2=$(($(ip -s -c link show wlan0 | tail -n3 | head -n 1 | cut -d " " -f5) + $RECIEVE2))
+            RECIEVE2=$(($(ip -s -c link show $IFACE | tail -n3 | head -n 1 | cut -d " " -f5) + $RECIEVE2))
         fi
     done
     

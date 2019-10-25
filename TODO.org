@@ -12,10 +12,9 @@ Each module writes to stdout.
 * Todo List
 - Delay in archupdates module (if minutes divisible by 5/4)
 - Add dependencies like bc
-- Add hostname module
 
 Bugs to fix:
-None
+- Fix networkup/down crazy values
 
 Modules to Write:
 - We are more than welcome to accept ideas and pull requests for future
