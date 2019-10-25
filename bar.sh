@@ -40,8 +40,8 @@ get_bar()
 {
 	for module in $MODULES; do
 		if [[ $INTERNET -eq 0 ]] || [[ $ONLINE_MODULES != *"$module"* ]];then
-			module_out=$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')
-			bar=$bar$module_out
+			module_out="$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')"
+			bar="$bar$module_out"
 		fi
 	done
 	# Uncomment to remove last separator
@@ -59,7 +59,7 @@ run_module()
 	fi
 
 	[[ ! "$out" = "" ]] && [[ ! "$module" = "NULL" ]] && out="$out$SEPARATOR."
-	echo $out > "$OUTPUT_CACHE$module"
+	echo "$out" > "$OUTPUT_CACHE$module"
 }
 
 run()
