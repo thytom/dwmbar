@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Prints USER@hostname
+
+PREFIX=' '
+
+get_hostname()
+{
+    echo "$PREFIX$USER@$(hostname)"
+}
+
+get_hostname
