@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Prints the number of updates for Void Linux
+
+PREFIX=' Updates: '
+
+get_updates()
+{
+    if ! updates=$(xbps-install -Mun 2> /dev/null | wc -l ); then
+        updates=0
+    fi
+    
+    echo "$PREFIX$updates"
+}
+
+get_updates
