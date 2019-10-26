@@ -53,12 +53,12 @@ run_module()
 {
 	if [[ -f "$CUSTOM_DIR$1" ]]
 	then
-		out="$(exec $CUSTOM_DIR$1)"
+		out="$($CUSTOM_DIR$1)"
 	else
-		out="$(exec $MODULES_DIR$1)"
+		out="$($MODULES_DIR$1)"
 	fi
 
-	[[ ! "$out" = "" ]] && [[ ! "$module" = "NULL" ]] && out="$out$SEPARATOR."
+	[[ ! "$out" = "" ]] && out="$out$SEPARATOR."
 	echo "$out" > "$OUTPUT_CACHE$module"
 }
 
@@ -67,10 +67,10 @@ run()
     get_internet
 	for module in $MODULES; do
 		pgrep $module &> /dev/null
-		if [[ $INTERNET -eq 0 ]] && [[ $? -eq 1 ]]; then
+		if [[ $? -eq 1 ]] && [[ $INTERNET -eq 0 ]]; then
 			run_module $module &
 		else
-			[[ $ONLINE_MODULES != *"$module"* ]] && run_module $module
+			[[ "$ONLINE_MODULES" != *"$module"* ]] && run_module $module
 		fi
 	done
 	get_bar
