@@ -2,7 +2,7 @@
 
 int main()
 {
-    char *internet_icon = "";
+    char *internet_icon = " ";
 
     printf("%s\n", internet_icon);
 
