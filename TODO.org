@@ -14,7 +14,7 @@ Each module writes to stdout.
 - Add dependencies like bc
 
 Bugs to fix:
-- Fix networkup/down crazy values
+none
 
 Modules to Write:
 - We are more than welcome to accept ideas and pull requests for future
