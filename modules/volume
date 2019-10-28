@@ -12,9 +12,9 @@ get_volume(){
 
         if [ "${curStatus}" = 'yes' ]
         then
-            echo "$VOLUME_MUTED_ICON $volume%"
+            echo "$VOLUME_MUTED_ICON  $volume%"
         else
-            echo "$VOLUME_ON_ICON $volume%"
+            echo "$VOLUME_ON_ICON  $volume%"
         fi
 }
 
