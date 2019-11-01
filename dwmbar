@@ -87,6 +87,5 @@ while :; do
 			INTERNET=1
 		fi
 	fi
-	xsetroot -name "$INTERNET $(exec $DEFAULT_BAR_LOCATION)"
-	# xsetroot -name "$INTERNET"
+	xsetroot -name "$(exec $DEFAULT_BAR_LOCATION)"
 done
