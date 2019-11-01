@@ -1,12 +1,10 @@
 #!/bin/bash
-
 # Copyright 2019 Archie Hilton <archie.hilton1@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
 #     the Free Software Foundation, either version 3 of the License, or
 #     (at your option) any later version.
-#
 #     This program is distributed in the hope that it will be useful,
 #     but WITHOUT ANY WARRANTY; without even the implied warranty of
 #     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,6 +24,9 @@ CONFIG_DIR="/home/$USER/.config/dwmbar"
 CUSTOM_DIR="$CONFIG_DIR/custom"
 CONFIG_FILE="$CONFIG_DIR/config"
 CACHE_DIR="$CONFIG_DIR/.cache"
+
+INTERNET=0
+export INTERNET
 
 print_help(){
 	echo "dwmbar $VERSION
@@ -75,5 +76,17 @@ done
 check_files
 
 while :; do
-	xsetroot -name "$(exec $DEFAULT_BAR_LOCATION)"
+	date=$(date +'%S')
+	if [ $(( 10#$date % 5 )) -eq 0 ]; then
+		echo "check"
+		wget --spider -q www.google.com
+
+		if [[ $? -eq 0 ]]; then
+			INTERNET=0
+		else
+			INTERNET=1
+		fi
+	fi
+	xsetroot -name "$INTERNET $(exec $DEFAULT_BAR_LOCATION)"
+	# xsetroot -name "$INTERNET"
 done
