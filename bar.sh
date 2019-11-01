@@ -23,19 +23,6 @@ OUTPUT=""
 CONFIG_FILE="/home/$USER/.config/dwmbar/config"
 source $CONFIG_FILE
 
-INTERNET=1 #0 being true
-
-get_internet()
-{
-    curl -q http://google.com &> /dev/null
-
-    if [[ $? -eq 0 ]]; then
-        INTERNET=0
-    else
-        INTERNET=1
-    fi
-}
-
 get_bar()
 {
 	for module in $MODULES; do
@@ -64,12 +51,12 @@ run_module()
 
 run()
 {
-    get_internet
 	for module in $MODULES; do
 		pgrep $module &> /dev/null
-		if [[ $? -eq 1 ]] && [[ $INTERNET -eq 0 ]]; then
-			run_module $module &
-		else
+		notrunning=$([[ $? -eq 1 ]])
+		if $notrunning && [[ $INTERNET -eq 0 ]]; then
+			run_module $module
+		elif $notrunning && [[ $INTERNET -eq 1 ]]; then
 			[[ "$ONLINE_MODULES" != *"$module"* ]] && run_module $module
 		fi
 	done
