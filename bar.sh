@@ -32,7 +32,7 @@ get_bar()
 		fi
 	done
 	# Uncomment to remove last separator
-	bar=$(echo $bar | sed 's/.$//g')
+	bar="$(echo $bar | sed 's/.$//g')"
 	echo "$LEFT_PADDING$bar$RIGHT_PADDING"
 }
 
