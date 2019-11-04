@@ -32,7 +32,7 @@ get_bar()
 		fi
 	done
 	# Uncomment to remove last separator
-	# bar=$(echo $bar | sed 's/.$//g')
+	bar=$(echo $bar | sed 's/.$//g')
 	echo "$LEFT_PADDING$bar$RIGHT_PADDING"
 }
 
@@ -51,17 +51,15 @@ run_module()
 
 run()
 {
-	# for module in $MODULES; do
-	# 	pgrep $module &> /dev/null
-	# 	notrunning=$([[ $? -eq 1 ]])
-	# 	if $notrunning && [[ $INTERNET -eq 0 ]]; then
-	# 		run_module $module
-	# 	elif $notrunning && [[ $INTERNET -eq 1 ]]; then
-	# 		[[ "$ONLINE_MODULES" != *"$module"* ]] && run_module $module
-	# 	fi
-	# done
-
-	parallel $MODULES_DIR{} ::: $MODULES
+	for module in $MODULES; do
+		pgrep $module &> /dev/null
+		notrunning=$([[ $? -eq 1 ]])
+		if $notrunning && [[ $INTERNET -eq 0 ]]; then
+			run_module $module
+		elif $notrunning && [[ $INTERNET -eq 1 ]]; then
+			[[ "$ONLINE_MODULES" != *"$module"* ]] && run_module $module
+		fi
+	done
 
 	get_bar
 	sleep $DELAY;

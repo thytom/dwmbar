@@ -16,5 +16,5 @@ CUSTOM_DIR="/home/$USER/.config/dwmbar/modules/custom/"
 SEPARATOR=" | "
 
 # Padding at the end and beggining of the status bar
-RIGHT_PADDING="$USER@$HOSTNAME "
-LEFT_PADDING="  "
+RIGHT_PADDING=""
+LEFT_PADDING=""
