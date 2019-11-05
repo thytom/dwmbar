@@ -11,8 +11,9 @@ Each module writes to stdout.
 
 * Todo List
 - Delay in archupdates module (if minutes divisible by 5/4)
-- Add dependencies like bc
-- Remove + - from temps
+- python3 instead of bc
+- User can specify the separator between each module
+- Fix weather module
 
 Bugs to fix:
 none
