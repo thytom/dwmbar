@@ -47,7 +47,7 @@ run_module()
 	fi
 
 	if [[ "$out" = " " ]]; then
-		echo " " > "$OUTPUT_CACHE$module"
+		echo "" > "$OUTPUT_CACHE$module"
 	elif [[ ! "$out" = "" ]]; then
 		out="$out$SEPARATOR."
 		echo "$out" > "$OUTPUT_CACHE$module"

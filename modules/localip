@@ -6,7 +6,9 @@ PREFIX='ﯱ '
 
 get_local_ip()
 {
-    echo "$PREFIX$(hostname -i)"
+	IP=$(ip addr | grep -e "inet " | awk 'NR==2' | sed 's/^.*inet.//g; s/\/.*//g')
+
+	echo "$PREFIX$IP"
 }
 
 get_local_ip
