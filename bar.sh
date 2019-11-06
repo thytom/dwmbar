@@ -55,7 +55,7 @@ run_module()
 run()
 {
 	for module in $MODULES; do
-		[[ ! -f "$OUTPUT_CACHE$module" ]] && echo "$OUTPUT_CACHE$module"
+		[[ ! -f "$OUTPUT_CACHE$module" ]] && touch "$OUTPUT_CACHE$module"
 		pgrep $module &> /dev/null
 		notrunning=$([[ $? -eq 1 ]])
 		if $notrunning && [[ $INTERNET -eq 0 ]]; then
