@@ -50,9 +50,8 @@ print_help(){
 }
 
 copy_usr_to_home(){
-	[[ ! -d $CONFIG_DIR ]] && cp -r /usr/share/dwmbar $CONFIG_DIR
-    [[ ! -f $CONFIG_FILE ]] && cp /usr/share/dwmbar/config $CONFIG_FILE
-	[[ ! -d $CUSTOM_DIR ]] && mkdir $CUSTOM_DIR
+	mkdir -p "$CUSTOM_DIR"
+	cp -r "$DEFAULT_CONFIG_DIR{config}" "$CONFIG_DIR"
 }
 
 check_files(){
