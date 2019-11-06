@@ -8,7 +8,7 @@ get_cputemp()
 	# CPU_T=$(cat /sys/devices/platform/coretemp.0/hwmon/hwmon?/temp2_input)
 	# CPU_TEMP=$(expr $CPU_T / 1000)
 
-	CPU_TEMP="$(sensors | grep temp1 | awk 'NR==1{gsub("+", " "); print $2}')"
+	CPU_TEMP="$(sensors | grep temp1 | awk 'NR==1{gsub("+", " "); gsub("\\..", " "); print $2"°C"}')"
 
 	# elif [ "$CPU_TEMP" -le 10 ]; then
 	# 	echo "  $CPU_TEMP"
