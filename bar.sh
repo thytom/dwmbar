@@ -17,7 +17,11 @@
 
 MODULES_DIR="/usr/share/dwmbar/modules/"
 
-OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
+if [[ -d $CACHE_DIR ]]; then
+	OUTPUT_CACHE="$CACHE_DIR"
+else
+	OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
+fi
 OUTPUT=""
 
 CONFIG_FILE="/home/$USER/.config/dwmbar/config"
