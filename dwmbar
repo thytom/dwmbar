@@ -53,6 +53,11 @@ check_files(){
 		exit 1
 	fi
 
+    if [[ ! -d $CACHE_DIR ]]; then
+        echo "$CACHE_DIR does not exist." > /dev/stderr
+        exit 1
+    fi 
+
 	if [[ ! -f $DEFAULT_BAR_LOCATION ]]; then
 		echo "$DEFAULT_BAR_LOCATION does not exist." > /dev/stderr
 		exit 1
