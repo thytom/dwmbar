@@ -14,7 +14,7 @@
 #
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-if [[ -z $CACHE_DIR ]]; then
+if [[ ! -z $CACHE_DIR ]]; then
 	OUTPUT_CACHE="$CACHE_DIR"
 else
 	OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
