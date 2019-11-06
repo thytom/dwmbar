@@ -10,10 +10,7 @@ Each module writes to stdout.
 /home/$USER/.config/dwmbar/modules/
 
 * Todo List
-- Delay in archupdates module (if minutes divisible by 5/4)
-- python3 instead of bc
-- User can specify the separator between each module
-- Fix weather module
+nothing :D
 
 Bugs to fix:
 none
