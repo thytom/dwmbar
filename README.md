@@ -66,16 +66,6 @@ the start of your bar, on the very right. This can either be padding spaces, to
 move the bar away from the right edge, or even text. By default, we set
 `PADDING` to `$USER@$HOSTNAME`. Feel free to change this.
 
-### About dwmbarrc
-
-**Because we expect people to modify `dwmbarrc`, we will never update it.
-dwmbar will automatically create it if it is not there, but once it is there,
-it must be deleted for another up-to-date version to be given.**
-
-Interestingly, so long as dwmbarrc prints *something* to stdout, it does not
-matter what it's written in, or what it does. So if you want to write your own
-implementation and use that, go nuts.
-
 ## Writing Modules
 
 Default modules are located within `~/.config/dwmbar/modules`, and custom
