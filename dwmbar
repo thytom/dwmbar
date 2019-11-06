@@ -95,7 +95,6 @@ check_files
 while :; do
 	date=$(date +'%S')
 	if [ $(( 10#$date % 5 )) -eq 0 ]; then
-		echo "check"
 		wget --spider -q www.google.com
 
 		if [[ $? -eq 0 ]]; then
