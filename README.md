@@ -68,7 +68,7 @@ move the bar away from the right edge, or even text. By default, we set
 
 ## Writing Modules
 
-Default modules are located within `~/.config/dwmbar/modules`, and custom
+Default modules are located within `/usr/share/dwmbar/modules`, and custom
 modules can be placed in `~/.config/dwmbar/modules/custom`. If a default module
 exists with the same name as a custom module, then the custom module will take
 precedence.
