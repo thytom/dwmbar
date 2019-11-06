@@ -1,13 +1,14 @@
 #!/bin/bash
 
-PREFIX_PLAY=' '
-PREFIX_PAUSE=' '
+PREFIX_PLAY=' '
+PREFIX_PAUSE=' '
 
 get_mpd()
 {
 	current_song="$(mpc current)"
 
 	if [[ "$current_song" = "" ]]; then
+		echo " "
 		exit 0
 	else
 		playpause=$(mpc | awk '/\[.*]/{split($0, a, " "); print a[1]}')
