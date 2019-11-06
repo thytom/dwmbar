@@ -21,7 +21,7 @@ See [module prerequisites][Module Prerequisites]
 
 ## Arch Linux
 
-There is an [AUR package](https://aur.archlinux.org/packages/dwmbar) for
+There is an [AUR package](https://aur.archlinux.org/packages/dwmbar-git) for
 dwmbar, which can be installed with your favourite aur helper, or manually.
 
 Please see the [archwiki
@@ -91,29 +91,37 @@ Modules can be written in any language, so long as they are executable and
 print their output to stdout.
 
 Currently available default modules are:
-- archupdates		- Gets the number of updates available **Arch Linux Only**
-- backlight			- Shows the brightness of the screen
-- battery			- Gets battery percentage
-- bluetooth			- Shows bluetooth status
-- cpuload			- Shows the CPU load in %
-- date				- Shows the calendar date
-- daypercentage		- Shows how far through the day you are, in %
-- disksize			- Shows the disk usage
-- ethernet			- Shows ethernet connection
-- internet			- Shows whether internet is available (TODO)
-- mail				- Shows how much mail you have
-- mpd				- Shows MPD status
-- ram				- Shows RAM usage
-- redshift			- Shows current screen temperature from Redshift
-- sunmoon			- Displays a sun or moon for time of day
-- temperature		- Displays the temperature of the CPU
-- time				- Displays time
-- todo				- Prints the number of todos for the "t" todo manager
-- tor				- Prints if the tor service is enabled
-- volume			- Prints volume in %
-- volumebar			- Displays a volume bar
-- weather			- Shows weather info
-- wifi				- Shows wifi connection
+- archupdates		 - Gets the number of updates available **Arch Linux Only**
+- backlight			 - Shows the brightness of the screen
+- battery			 - Gets battery percentage
+- bluetooth			 - Shows bluetooth status
+- cpuload			 - Shows the CPU load in %
+- date				 - Shows the calendar date
+- daypercentage		 - Shows how far through the day you are, in %
+- disksize			 - Shows the disk usage
+- ethernet			 - Shows ethernet connection
+- fanspeed           - Shows the rpm of your main fan
+- hostname           - Shows your current user and hostname
+- internet			 - Shows whether internet is available (TODO)
+- kernel             - Shows the kernel version
+- localip            - Shows your local IP address
+- mail				 - Shows how much mail you have
+- mpd				 - Shows MPD status
+- networkdowntraffic - Gets the download traffic in Kb/s
+- networkuptraffic   - Gets the upload traffic in Kb/s
+- publicip           - Shows your public IP address
+- ram				 - Shows RAM usage
+- redshift			 - Shows current screen temperature from Redshift
+- sunmoon			 - Displays a sun or moon for time of day
+- temperature		 - Displays the temperature of the CPU
+- time				 - Displays time
+- todo				 - Prints the number of todos for the "t" todo manager
+- tor				 - Prints if the tor service is enabled
+- voidupdates        - Gets the number of updates available **Void Linux Only**
+- volumebar			 - Displays a volume bar
+- volume			 - Prints volume in %
+- weather			 - Shows weather info
+- wifi				 - Shows wifi connection
 
 ## Module Prerequisites
 
@@ -126,11 +134,15 @@ See Module Dependencies
 	- light
 * bluetooth
 	- bluez
+* fanspeed
+    - lmsensors
 * mail
 	- mutt/neomutt (We recommend [Luke Smith's Mutt-Wizard](https://github.com/LukeSmithxyz/mutt-wizard)) for configuration.
 * mpd
 	- mpd
 	- mpc
+* publicip
+    - curl
 * redshift
 	- redshift
 * sunmoon
@@ -141,6 +153,8 @@ See Module Dependencies
 	- [t todo manager](https://github.com/sjl/t)
 * tor
 	- tor
+* voidupdates
+    - xbps package manager
 * volume
 	- pulseaudio
 * volumebar
