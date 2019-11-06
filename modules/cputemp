@@ -3,7 +3,7 @@
 # Gets temperature of the CPU
 # Dependencies: lm_sensors
 
-get_temperature()
+get_cputemp()
 {
 	# CPU_T=$(cat /sys/devices/platform/coretemp.0/hwmon/hwmon?/temp2_input)
 	# CPU_TEMP=$(expr $CPU_T / 1000)
@@ -18,4 +18,4 @@ get_temperature()
 	echo " $CPU_TEMP"
 }
 
-get_temperature
+get_cputemp
