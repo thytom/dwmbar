@@ -125,7 +125,7 @@ See Module Dependencies
 * bluetooth
 	- bluez
 * fanspeed
-    - lmsensors
+        - lm_sensors
 * mail
 	- mutt/neomutt (We recommend [Luke Smith's Mutt-Wizard](https://github.com/LukeSmithxyz/mutt-wizard)) for configuration.
 * mpd
