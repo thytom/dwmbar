@@ -31,7 +31,7 @@ get_battery()
 			BAT_ICON=$BATTERY_FULL_ICON
 		elif [[ $capacity -le 25 ]]; then
 			BAT_ICON=$BATTERY_4_ICON
-		elif [[ $capacity -le 50 ]]; then
+		elif [[ $capacity -le 60 ]]; then
 			BAT_ICON=$BATTERY_3_ICON
 		elif [[ $capacity -le $FULL_AT ]]; then
 			BAT_ICON=$BATTERY_2_ICON
