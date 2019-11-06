@@ -10,7 +10,7 @@ Each module writes to stdout.
 /home/$USER/.config/dwmbar/modules/
 
 * Todo List
-nothing :D
+- Separator optional between modules
 
 Bugs to fix:
 none
