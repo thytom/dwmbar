@@ -14,18 +14,16 @@
 #
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-MODULES_DIR="/usr/share/dwmbar/modules/"
-
-if [[ -d $CACHE_DIR ]]; then
+if [[ -z $CACHE_DIR ]]; then
 	OUTPUT_CACHE="$CACHE_DIR"
 else
 	OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 fi
-OUTPUT=""
 
 CONFIG_FILE="/home/$USER/.config/dwmbar/config"
 source $CONFIG_FILE
+
+OUTPUT=""
 
 get_bar()
 {
@@ -46,7 +44,7 @@ run_module()
 	then
 		out="$($CUSTOM_DIR$1)"
 	else
-		out="$($MODULES_DIR$1)"
+		out="$($DEFAULT_MODULES_DIR$1)"
 	fi
 
 	if [[ ! "$out" = "" ]]; then
