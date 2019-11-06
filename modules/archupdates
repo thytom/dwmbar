@@ -4,9 +4,9 @@
 # Requires an internet connection
 # Depends on yay and checkupdates (pacman-contrib)
 
-PREFIX=' Updates: '
+PREFIX='  Updates: '
 
-get_updates() 
+get_updates()
 {
     if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
         updates_arch=0

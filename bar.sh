@@ -45,8 +45,10 @@ run_module()
 		out="$($MODULES_DIR$1)"
 	fi
 
-	[[ ! "$out" = "" ]] && out="$out$SEPARATOR."
-	echo "$out" > "$OUTPUT_CACHE$module"
+	if [[ ! "$out" = "" ]]; then
+		out="$out$SEPARATOR."
+		echo "$out" > "$OUTPUT_CACHE$module"
+	fi
 }
 
 run()

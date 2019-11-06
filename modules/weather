@@ -1,56 +1,15 @@
 #!/bin/bash
 
-# Prints out the weather at your approximate location
-# Needs an internet connection
-# Dependencies: jq
+# Deps:
+# 	curl
 
-SUN_ICON=''
-CLOUD_ICON='摒'
-RAIN_ICON='歹'
-THUNDER_ICON='朗'
-SNOW_ICON='流'
-MIST_ICON='敖'
 
 get_weather()
 {
-    LOCATION=$(curl -s http://ip-api.com/json | \
-        jq '.lat, .lon' | \
-        while read -r LATITUDE; do
-                read -r LONGITUDE
-                echo "${LATITUDE}:${LONGITUDE}" | tr -d '"'
-        done)
-    
-    LANG="en"
-    UNITS="Metric"
-    API_KEY="756edce7e9d4c385ef9499a53492678c"
-
-    LOCATION_FORMATTED_2=$(echo $LOCATION | cut -d ':' -f2)
-    LOCATION_FORMATTED_1=$(echo $LOCATION | cut -d ':' -f1)
-
-    OUTPUT=$(curl -s "http://api.openweathermap.org/data/2.5/weather?lat=$LOCATION_FORMATTED_1&lon=$LOCATION_FORMATTED_2&lang=$LANG&appid=$API_KEY&units=$UNITS")
-    STATUS=$(echo $OUTPUT | jq '.weather' | tr '[' ' ' | tr ']' ' ' | jq '.main' | sed 's/"//g')
-    TEMP=$(echo $OUTPUT | jq '.main' | jq '.temp' | xargs printf "%.*f\n" 0)
-
-    case $STATUS in
-        "Clear" )
-            echo $SUN_ICON;;
-        "Clouds" )
-            echo $CLOUD_ICON;;
-        "Rain" )
-            echo $RAIN_ICON;;
-        "Thunderstorm" )
-            echo $THUNDER_ICON;;
-        "Snow" )
-            echo $SNOW_ICON;;
-        "Mist" )
-            echo $MIST_ICON;;
-        * )
-            echo "?";;
-    esac
-
-    echo "$STATUS, "
-    echo "$TEMP°C"
+	curl -s v2.wttr.in | grep -e "Weather" | sed 's/C,.*/C/g; s/+//g; s/.*\[0m.//g; s/.//2'
 }
 
-get_weather
 
+if [ $(( 10#$(date +'%S') % 30 )) -eq 0 ]; then
+	get_weather
+fi
