@@ -13,4 +13,6 @@ get_updates()
     echo "$PREFIX$updates"
 }
 
-get_updates
+if [ $(( 10#$(date '+%M') % 3 )) -eq 0 ] && [ $(( 10#$(date '+%S') )) -eq 5 ]; then
+    get_updates
+fi
