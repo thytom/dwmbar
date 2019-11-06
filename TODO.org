@@ -11,6 +11,7 @@ Each module writes to stdout.
 
 * Todo List
 - Separator optional between modules
+- Call all modules once on startup, then deal with delays
 
 Bugs to fix:
 none
