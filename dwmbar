@@ -23,7 +23,8 @@ DEFAULT_CONFIG_LOCATION="$DEFAULT_CONFIG_DIR/config"
 CONFIG_DIR="/home/$USER/.config/dwmbar"
 CUSTOM_DIR="$CONFIG_DIR/custom"
 CONFIG_FILE="$CONFIG_DIR/config"
-CACHE_DIR="$CONFIG_DIR/.cache"
+CACHE_DIR="$HOME/.cache/dwmbar/"
+export CACHE_DIR
 
 INTERNET=1
 export INTERNET
@@ -39,31 +40,29 @@ copy_usr_to_home(){
 	[[ ! -d $CONFIG_DIR ]] && cp -r /usr/share/dwmbar $CONFIG_DIR
     [[ ! -f $CONFIG_FILE ]] && cp /usr/share/dwmbar/config $CONFIG_FILE
 	[[ ! -d $CUSTOM_DIR ]] && mkdir $CUSTOM_DIR
-	[[ ! -d $CACHE_DIR ]] && mkdir $CACHE_DIR
 }
 
 check_files(){
-	if [[ ! -d $DEFAULT_CONFIG_DIR ]]; then
+	if [[ ! -d "$DEFAULT_CONFIG_DIR" ]]; then
 		echo "$DEFAULT_CONFIG_DIR does not exist." > /dev/stderr
 		exit 1
 	fi
 
-	if [[ ! -d $DEFAULT_MODULES_DIR ]]; then
+	if [[ ! -d "$DEFAULT_MODULES_DIR" ]]; then
 		echo "$DEFAULT_MODULES_DIR does not exist." > /dev/stderr
 		exit 1
 	fi
 
-    if [[ ! -d $CACHE_DIR ]]; then
-        echo "$CACHE_DIR does not exist." > /dev/stderr
-        exit 1
-    fi 
+    if [[ ! -d "$CACHE_DIR" ]]; then
+		mkdir -p "$CACHE_DIR"
+    fi
 
-	if [[ ! -f $DEFAULT_BAR_LOCATION ]]; then
+	if [[ ! -f "$DEFAULT_BAR_LOCATION" ]]; then
 		echo "$DEFAULT_BAR_LOCATION does not exist." > /dev/stderr
 		exit 1
 	fi
 
-    if [[ ! -f $DEFAULT_CONFIG_LOCATION ]]; then
+    if [[ ! -f "$DEFAULT_CONFIG_LOCATION" ]]; then
         echo "$DEFAULT_CONFIG_LOCATION does not exist." > /dev/stderr
         exit 1
     fi
