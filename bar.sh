@@ -20,7 +20,6 @@ else
 	OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 fi
 
-CONFIG_FILE="/home/$USER/.config/dwmbar/config"
 source $CONFIG_FILE
 
 OUTPUT=""
