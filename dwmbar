@@ -39,7 +39,7 @@ export CONFIG_FILE
 CACHE_DIR="$HOME/.cache/dwmbar/"
 export CACHE_DIR
 
-INTERNET=1
+INTERNET=1 # No internet
 export INTERNET
 
 print_help(){
@@ -90,21 +90,20 @@ while getopts 'vc' flag; do
 done
 
 check_internet() {
-	if [ $(( 10#$date % 5 )) -eq 0 ]; then
-		wget --spider -q www.google.com --timeout=3
-
+		wget --spider -q --timeout=2 www.google.com
 		if [[ $? -eq 0 ]]; then
-			INTERNET=0
+			echo 0
 		else
-			INTERNET=1
+			echo 1
 		fi
-	fi
 }
 
 check_files
 
 while :; do
 	date=$(date +'%S')
-	check_internet &
+	if [ $(( 10#$date % 5 )) -eq 0 ]; then
+		INTERNET=$(check_internet)
+	fi
 	xsetroot -name "$(exec $DEFAULT_BAR_LOCATION)"
 done
