@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Prints the total ram and used ram in Mb
+
+PREFIX=''
+
+get_uptime()
+{
+    UPTIME=$(uptime | sed 's/.*up \([^,]*\), .*/\1/')
+    echo "$PREFIX$UPTIME"
+}
+
+get_uptime
