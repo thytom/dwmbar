@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Gets temperature of the GPU
+# Dependencies: nvidia drivers and nvidia-settings
+
+PREFIX=' '
+FIRE=' '
+
+WARNING_LEVEL=80
+
+get_gputemp()
+{
+	GPU_TEMP="$(nvidia-settings -q gpucoretemp -t | head -n 1)"
+
+	if [ "$GPU_TEMP" -ge $WARNING_LEVEL ]; then
+		PREFIX="$FIRE$PREFIX"
+	fi
+
+	echo "$PREFIX$GPU_TEMP°C"
+}
+
+get_gputemp
