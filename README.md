@@ -4,6 +4,8 @@ dwmbar - A Modular Status Bar for dwm
 
 dwmbar is a very simple status bar written for dwm.
 
+**This project is no longer actively maintained. You will likely not receive support from the devs if something's not right. If you are somebody who is interested in taking over this project, please contact me (thytom) and we can discuss adding you as a contributor. You are also more than welcome to fork the project if you wish to make improvements on your own.**
+
 # Installation
 
 ## Prerequisites
