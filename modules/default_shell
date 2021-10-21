@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Prints out the name of the default shell
+
+PREFIX=' '
+
+get_default_shell()
+{
+    echo "$PREFIX$(echo $SHELL |sed 's/.*\///g')"
+}
+
+get_default_shell
