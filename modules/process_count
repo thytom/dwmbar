@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Prints out your process count
+
+PREFIX=' '
+
+get_proc_count()
+{
+	PROC_COUNT=$(ps -Al | wc -l)
+
+	echo "$PREFIX$PROC_COUNT"
+}
+
+get_proc_count
