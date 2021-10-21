@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Prints out your OS name
+
+PREFIX=' '
+
+get_os_name()
+{
+        OS=$(cat /etc/os-release | head -n 1 | sed 's/NAME=//g')
+
+        echo "$PREFIX$OS"
+}
+
+get_os_name
