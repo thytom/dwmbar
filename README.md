@@ -18,7 +18,7 @@ Highly Recommended:
 
 Optional (By module):
 
-See [module prerequisites](Module Prerequisites).
+See [module prerequisites](#module-prerequisites).
 
 
 ## Arch Linux
