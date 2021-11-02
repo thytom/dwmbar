@@ -6,7 +6,7 @@ PREFIX=' '
 
 get_daypercentage()
 {
-    MINUTES="$[$(date +%R | cut -d ':' -f1) * 60 + $(date +%R | cut -d ':' -f2) ]"
+    MINUTES="$[$(date +%R | cut -d ':' -f1 | sed 's/^0*//') * 60 + $(date +%R | cut -d ':' -f2) ]"
     echo "$PREFIX$(echo $[ $MINUTES * 100 / 1440 ]  | sed 's/\..*//g')%"
 }
 
