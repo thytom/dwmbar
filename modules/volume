@@ -6,9 +6,8 @@ VOLUME_ON_ICON=''
 VOLUME_MUTED_ICON=''
 
 get_volume(){
-        active_sink=$(pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1)
-        curStatus=$(pactl get-sink-mute $active_sink)
-        volume=$(pactl get-sink-volume $active_sink | tail -n 2 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' | head -n 1)
+        curStatus=$(pactl get-sink-mute @DEFAULT_SINK@)
+        volume=$(pactl get-sink-volume @DEFAULT_SINK@ | tail -n 2 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' | head -n 1)
 
         if [ "${curStatus}" = 'Mute: yes' ]
         then
