@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Prints the effective username of the current user
+
+PREFIX=''
+
+get_username()
+{
+	USERNAME=$(whoami)
+	
+	echo "$PREFIX $USERNAME"
+}
+
+get_username
