@@ -33,7 +33,7 @@ fi
 mkdir --parents "/usr/share/dwmbar/"
 
 echo "./modules --> /usr/share/dwmbar/modules"
-cp -r "./modules" "/usr/share/dwmbar/modules"
+cp -rT "./modules" "/usr/share/dwmbar/modules"
 
 echo "./bar.sh --> /usr/share/dwmbar/bar.sh"
 cp "./bar.sh" "/usr/share/dwmbar/bar.sh"
