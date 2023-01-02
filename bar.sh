@@ -20,7 +20,7 @@ else
 	OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 fi
 
-source $CONFIG_FILE
+source "$CONFIG_FILE"
 
 OUTPUT=""
 
@@ -28,7 +28,7 @@ get_bar()
 {
 	for module in $MODULES; do
 		if [[ $INTERNET -eq 0 ]] || [[ $ONLINE_MODULES != *"$module"* ]];then
-			module_out="$(cat $OUTPUT_CACHE$module | sed 's/\.$//g')"
+			module_out="$(cat "$OUTPUT_CACHE""$module" | sed 's/\.$//g')"
 			bar="$bar$module_out"
 		fi
 	done
@@ -41,9 +41,9 @@ run_module()
 {
 	if [[ -f "$CUSTOM_DIR$1" ]]
 	then
-		out="$($CUSTOM_DIR$1)"
+		out="$("$CUSTOM_DIR""$1")"
 	else
-		out="$($DEFAULT_MODULES_DIR$1)"
+		out="$("$DEFAULT_MODULES_DIR""$1")"
 	fi
 
 	if [[ "$out" = " " ]]; then
@@ -58,17 +58,17 @@ run()
 {
 	for module in $MODULES; do
 		[[ ! -f "$OUTPUT_CACHE$module" ]] && touch "$OUTPUT_CACHE$module"
-		pgrep $module &> /dev/null
+		pgrep "$module" &> /dev/null
 		notrunning=$([[ $? -eq 1 ]])
 		if $notrunning && [[ $INTERNET -eq 0 ]]; then
-			run_module $module
+			run_module "$module"
 		elif $notrunning && [[ $INTERNET -eq 1 ]]; then
-			[[ "$ONLINE_MODULES" != *"$module"* ]] && run_module $module
+			[[ "$ONLINE_MODULES" != *"$module"* ]] && run_module "$module"
 		fi
 	done
 
 	get_bar
-	sleep $DELAY;
+	sleep "$DELAY";
 }
 
 run

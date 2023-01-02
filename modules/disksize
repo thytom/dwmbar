@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Prints out the total disk memory and the availeable memory
+# Prints out the total disk memory and the available memory
 
 PREFIX=' '
 
