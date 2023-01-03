@@ -15,6 +15,6 @@ CUSTOM_DIR="/home/$USER/.config/dwmbar/modules/custom/"
 # Separator between modules
 SEPARATOR=" | "
 
-# Padding at the end and beggining of the status bar
+# Padding at the end and beginning of the status bar
 RIGHT_PADDING=" "
 LEFT_PADDING=" "

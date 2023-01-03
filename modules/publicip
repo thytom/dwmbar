@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Prints out your public IP adress
+# Prints out your public IP address
 # Depends on curl
 
 PREFIX=' '
