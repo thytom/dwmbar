@@ -90,7 +90,7 @@ while getopts 'vc' flag; do
 done
 
 check_internet() {
-		wget --spider -q --timeout=2 www.google.com
+		wget --spider -q --timeout=2 https://www.google.com
 		if [[ $? -eq 0 ]]; then
 			echo 0
 		else
