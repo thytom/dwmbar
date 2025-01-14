@@ -2,7 +2,7 @@
 
 # Prints out your local IP
 
-PREFIX='ﯱ '
+PREFIX='ᯤ '
 
 get_local_ip()
 {
