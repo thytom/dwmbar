@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PREFIX='  Updates: '
+PREFIX='  Updates: '
 CACHE_FILE="/tmp/pacman_updates_$$"
 CACHE_DURATION=300
 
