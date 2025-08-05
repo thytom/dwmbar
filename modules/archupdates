@@ -1,27 +1,31 @@
 #!/bin/bash
 
-# Prints out the number of pacman updates (Arch Linux)
-# Requires an internet connection
-# Depends on yay and checkupdates (pacman-contrib)
-# Optional: add --devel flag to the yay cmd to check for *-git package updates.
+PREFIX='  Updates: '
+CACHE_FILE="/tmp/pacman_updates_$$"
+CACHE_DURATION=300
 
-PREFIX='  Updates: '
-
-get_updates()
-{
-    if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
-        updates_arch=0
+get_updates() {
+    local updates_arch=0 updates_aur=0 total=0
+    
+    if command -v checkupdates >/dev/null 2>&1; then
+        updates_arch=$(checkupdates 2>/dev/null | wc -l)
     fi
-
-    if ! updates_aur=$(yay -Qum 2> /dev/null | wc -l); then
-        updates_aur=0
+    
+    if command -v yay >/dev/null 2>&1; then
+        updates_aur=$(yay -Qum 2>/dev/null | wc -l)
+    elif command -v paru >/dev/null 2>&1; then
+        updates_aur=$(paru -Qum 2>/dev/null | wc -l)
+    elif command -v trizen >/dev/null 2>&1; then
+        updates_aur=$(trizen -Qum 2>/dev/null | wc -l)
     fi
-
-    updates=$(("$updates_arch" + "$updates_aur"))
-
-    echo "$PREFIX$updates"
+    
+    total=$((updates_arch + updates_aur))
+    echo "$total" > "$CACHE_FILE"
+    echo "$PREFIX$total"
 }
 
-if [ $(( 10#$(date '+%M') % 3 )) -eq 0 ] && [ $(( 10#$(date '+%S') )) -eq 5 ]; then
+if [[ -f "$CACHE_FILE" && $(($(date +%s) - $(stat -c %Y "$CACHE_FILE"))) -lt $CACHE_DURATION ]]; then
+    echo "$PREFIX$(cat "$CACHE_FILE")"
+else
     get_updates
 fi
