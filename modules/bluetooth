@@ -1,20 +1,11 @@
 #!/bin/bash
 
-# Prints out the bluetooth status
-
-BLUETOOTH_ON_ICON=''
-BLUETOOTH_OFF_ICON=''
+BLUETOOTH_ON_ICON=''
 
 get_bluetooth()
 {
-    status=$(systemctl is-active bluetooth.service)
-
-    if [ "$status" == "active" ]
-    then
+    if systemctl is-active bluetooth.service >/dev/null 2>&1; then
         echo "$BLUETOOTH_ON_ICON"
-    else
-        :
-        #echo "$BLUETOOTH_OFF_ICON"
     fi
 }
 

@@ -1,13 +1,15 @@
 #!/bin/bash
 
-# Prints the backlight percentage
-# Requires the light package
-
 PREFIX='ﯧ'
 
 get_backlight()
 {
-    echo "$PREFIX $(light | sed 's/\..*//g')%"
+    if command -v light >/dev/null 2>&1; then
+        brightness=$(light 2>/dev/null)
+        if [[ -n "$brightness" ]]; then
+            echo "$PREFIX ${brightness%.*}%"
+        fi
+    fi
 }
 
 get_backlight
