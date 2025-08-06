@@ -1,43 +1,45 @@
 #!/bin/bash
 
-# Prints out battery percentage
-
 CHARGING_ICON=' '
 WARNING_ICON=' '
-BATTERY_FULL_ICON=''
-BATTERY_2_ICON=''
-BATTERY_3_ICON=''
-BATTERY_4_ICON=''
-
+BATTERY_FULL_ICON=' '
+BATTERY_2_ICON=' '
+BATTERY_3_ICON=' '
+BATTERY_4_ICON=' '
 FULL_AT=98
-
-BAT_ICON=""
-ICON=""
 
 get_battery()
 {
-	# The vast majority of people only use one battery.
-
-	if [ -d /sys/class/power_supply/BAT0 ]; then
-		capacity=$(cat /sys/class/power_supply/BAT0/capacity)
-		charging=$(cat /sys/class/power_supply/BAT0/status)
-		if [[ "$charging" == "Charging" ]]; then
-			ICON="$CHARGING_ICON"
-		elif [[ $capacity -le 25 ]]; then
-			ICON="$WARNING_ICON"
-		fi
-
-		if [[ $capacity -ge $FULL_AT ]]; then
-			BAT_ICON=$BATTERY_FULL_ICON
-		elif [[ $capacity -le 25 ]]; then
-			BAT_ICON=$BATTERY_4_ICON
-		elif [[ $capacity -le 60 ]]; then
-			BAT_ICON=$BATTERY_3_ICON
-		elif [[ $capacity -le $FULL_AT ]]; then
-			BAT_ICON=$BATTERY_2_ICON
-		fi
-	fi
-	echo "$ICON$BAT_ICON  $capacity%"
+    # Find any available battery
+    for bat in /sys/class/power_supply/BAT*; do
+        [[ -d "$bat" ]] || continue
+        
+        capacity=$(cat "$bat/capacity" 2>/dev/null) || continue
+        charging=$(cat "$bat/status" 2>/dev/null) || continue
+        
+        local icon="" bat_icon=""
+        
+        # Status icon
+        if [[ "$charging" == "Charging" ]]; then
+            icon="$CHARGING_ICON"
+        elif [[ $capacity -le 25 ]]; then
+            icon="$WARNING_ICON"
+        fi
+        
+        # Battery level icon
+        if [[ $capacity -ge $FULL_AT ]]; then
+            bat_icon=$BATTERY_FULL_ICON
+        elif [[ $capacity -le 25 ]]; then
+            bat_icon=$BATTERY_4_ICON
+        elif [[ $capacity -le 60 ]]; then
+            bat_icon=$BATTERY_3_ICON
+        else
+            bat_icon=$BATTERY_2_ICON
+        fi
+        
+        echo "$icon$bat_icon $capacity%"
+        return
+    done
 }
 
 get_battery
