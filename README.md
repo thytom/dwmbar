@@ -123,12 +123,11 @@ print their output to stdout.
 
 </details>
 
-## Module Prerequisites
+## Module Prerequisites  <a name="module-prerequisites"></a>
 
 <details>
 <summary><strong>Show module prerequisites</strong></summary>
 
-See Module Dependencies
  - archupdates
 	- Arch Linux
 	- yay

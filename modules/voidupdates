@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
+# shellcheck source=../lib/common.sh
 . "$(dirname "$0")/../lib/common.sh"
+# shellcheck source=../lib/cache.sh
 . "$(dirname "$0")/../lib/cache.sh"
 
 # Prints the number of updates for Void Linux
