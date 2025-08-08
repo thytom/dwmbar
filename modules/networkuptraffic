@@ -4,28 +4,30 @@
 
 PREFIX=' '
 
-get_up_traffic()
-{
-    TRANSMIT1=0
-    TRANSMIT2=0
- 
-    IFACES=$(ip -o link show | awk -F': ' '{print $2}')
-    for IFACE in $IFACES; do
-        if [ $IFACE != "lo" ]; then
-            TRANSMIT1=$(($(ip -s -c link show $IFACE | tail -n1 | cut -d " " -f5) + TRANSMIT1))
-        fi
+get_up_traffic() {
+    local statdir=${NET_STAT_DIR:-/sys/class/net}
+    local transmit1=0 transmit2=0
+
+    for iface_path in "$statdir"/*; do
+        iface=$(basename "$iface_path")
+        [[ "$iface" == "lo" ]] && continue
+        tx_file="$iface_path/statistics/tx_bytes"
+        [[ -f "$tx_file" ]] || continue
+        transmit1=$((transmit1 + $(cat "$tx_file" 2>/dev/null)))
     done
 
     sleep 1
 
-    IFACES=$(ip -o link show | awk -F': ' '{print $2}')
-    for IFACE in $IFACES; do
-        if [ $IFACE != "lo" ]; then
-            TRANSMIT2=$(($(ip -s -c link show $IFACE | tail -n1 | cut -d " " -f5) + TRANSMIT2))
-        fi
+    for iface_path in "$statdir"/*; do
+        iface=$(basename "$iface_path")
+        [[ "$iface" == "lo" ]] && continue
+        tx_file="$iface_path/statistics/tx_bytes"
+        [[ -f "$tx_file" ]] || continue
+        transmit2=$((transmit2 + $(cat "$tx_file" 2>/dev/null)))
     done
 
-    echo "$PREFIX$(expr $(expr $TRANSMIT2 - $TRANSMIT1) / 1000)KB/s"
+    local kbps=$(((transmit2 - transmit1) / 1000))
+    echo "$PREFIX${kbps}KB/s"
 }
 
 get_up_traffic

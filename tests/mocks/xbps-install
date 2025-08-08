@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Mock Void updates (returns 2 updates)
+if [[ "$1" == "-Mun" ]]; then
+  echo package-a
+  echo package-b
+  exit 0
+fi
+exit 1

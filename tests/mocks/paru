@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Mock paru -Qum
+if [[ "$1" == "-Qum" ]]; then
+  echo aur-pkg1
+  exit 0
+fi
+exit 1

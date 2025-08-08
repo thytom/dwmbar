@@ -3,12 +3,13 @@
 # Prints number of unread mail
 # Requires mutt/neomutt
 
-MAIL_DIR="/home/$USER/Mail/INBOX/new/*"
+MAIL_DIR=${MAIL_DIR:-/home/$USER/Mail/INBOX/new}
 PREFIX=' :'
 
-get_mail()
-{
-	echo "$PREFIX$(du -a $MAIL_DIR 2>/dev/null | wc -l)"
+get_mail() {
+    shopt -s nullglob
+    local files=("$MAIL_DIR"/*)
+    echo "$PREFIX${#files[@]}"
 }
 
 get_mail

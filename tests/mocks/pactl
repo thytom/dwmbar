@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Minimal mock for pactl used by modules/volume and volumebar
+case "$1" in
+  get-default-sink)
+    echo "alsa_output.pci-0000_00_1b.0.analog-stereo"
+    ;;
+  list)
+    # Only support 'pactl list sinks'
+    cat <<'EOF'
+Sink #1
+	State: RUNNING
+	Name: alsa_output.pci-0000_00_1b.0.analog-stereo
+	Description: Mock Sink
+	Mute: no
+	Volume: front-left: 65536 / 100% / 0.00 dB,   front-right: 65536 / 100% / 0.00 dB
+EOF
+    ;;
+  get-sink-volume)
+    echo "Volume: front-left: 32768 / 50% / 0.00 dB,   front-right: 32768 / 50% / 0.00 dB"
+    ;;
+  get-sink-mute)
+    echo "Mute: no"
+    ;;
+  *)
+    exit 1
+    ;;
+ esac

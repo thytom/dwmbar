@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Mock PipeWire control: return volume 0.50 and not muted
+if [[ "$1" == "get-volume" ]]; then
+  echo "Volume: 0.50"
+  exit 0
+fi
+exit 1

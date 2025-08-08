@@ -4,13 +4,13 @@
 
 PREFIX=' Updates: '
 
-get_updates()
-{
-    if ! updates=$(xbps-install -Mun 2> /dev/null | wc -l ); then
-        updates=0
+get_updates() {
+    if command -v xbps-install >/dev/null 2>&1; then
+        if ! updates=$(xbps-install -Mun 2> /dev/null | wc -l ); then
+            updates=0
+        fi
+        echo "$PREFIX$updates"
     fi
-    
-    echo "$PREFIX$updates"
 }
 
 if [ $(( 10#$(date '+%M') % 3 )) -eq 0 ] && [ $(( 10#$(date '+%S') )) -eq 5 ]; then

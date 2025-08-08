@@ -4,12 +4,18 @@
 # 	curl
 
 
-get_weather()
-{
-	curl -s v2.wttr.in | grep -e "Weather" | sed -n 2p | sed s/Weather://g | sed 's/,//g' | sed 's/+//g' | sed 's/°C.*/°C/' | sed 's/.*m//'
+URL=${WEATHER_URL:-https://v2.wttr.in}
+LOCATION_PARAM=${WEATHER_LOCATION:-}
+QUERY="${URL}${LOCATION_PARAM:+/$LOCATION_PARAM}?format=%l:+%c+%t%20(%C)"
+
+get_weather() {
+    if ! command -v curl >/dev/null 2>&1; then
+        echo ""
+        return 0
+    fi
+    curl -s --max-time 2 "$QUERY"
 }
 
-
 if [ $(( 10#$(date '+%S') % 30 )) -eq 0 ]; then
-	get_weather
+    get_weather
 fi

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Minimal mock for 'ip' used by modules
+case "$1" in
+  -o)
+    # handle 'ip -o -4 addr show ...'
+    if [[ "$2" == "-4" && "$3" == "addr" ]]; then
+      if [[ "$4" == "show" && "$5" == "dev" ]]; then
+        echo "2: eth0    inet 192.0.2.10/24 brd 192.0.2.255 scope global eth0"
+      else
+        echo "2: eth0    inet 192.0.2.10/24 brd 192.0.2.255 scope global eth0"
+      fi
+    else
+      echo ""
+    fi
+    ;;
+  -s)
+    # not used after refactor to /sys/class/net in traffic modules
+    echo ""
+    ;;
+  addr)
+    # legacy call in old localip
+    echo "2: eth0    inet 192.0.2.10/24 brd 192.0.2.255 scope global eth0"
+    ;;
+  *)
+    echo ""
+    ;;
+ esac

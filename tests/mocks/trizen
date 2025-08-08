@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Mock trizen -Qum
+if [[ "$1" == "-Qum" ]]; then
+  echo aur-pkg1
+  echo aur-pkg2
+  exit 0
+fi
+exit 1

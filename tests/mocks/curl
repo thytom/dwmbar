@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Mock curl for modules that fetch network resources
+if [[ "$1" == "-s" || "$1" == "--silent" ]]; then shift; fi
+if [[ "$1" == "--max-time" ]]; then shift 2; fi
+url="$1"
+case "$url" in
+  https://ifconfig.co)
+    echo "203.0.113.42"
+    ;;
+  https://v2.wttr.in*)
+    echo "TestCity: ☀ +20°C (Clear)"
+    ;;
+  *)
+    echo ""
+    ;;
+ esac

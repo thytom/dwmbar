@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Very small mock of mpc
+if [[ "$1" == "current" ]]; then
+  echo "Mock Artist - Mock Song"
+  exit 0
+fi
+cat <<'EOF'
+[playing] #1/10   0:42/3:35 (20%)
+volume:100%   repeat: off   random: off   single: off   consume: off
+EOF

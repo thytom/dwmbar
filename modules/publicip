@@ -4,10 +4,14 @@
 # Depends on curl
 
 PREFIX=' '
+URL=${PUBLIC_IP_URL:-https://ifconfig.co}
 
-get_pub_ip()
-{
-    echo "$PREFIX$(curl -s ifconfig.co)"
+get_pub_ip() {
+    if ! command -v curl >/dev/null 2>&1; then
+        echo " "
+        return 0
+    fi
+    echo "$PREFIX$(curl -s --max-time 2 "$URL")"
 }
 
 get_pub_ip

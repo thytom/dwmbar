@@ -4,28 +4,30 @@
 
 PREFIX=' '
 
-get_down_traffic()
-{
-    RECEIVE1=0
-    RECEIVE2=0
+get_down_traffic() {
+    local statdir=${NET_STAT_DIR:-/sys/class/net}
+    local receive1=0 receive2=0
 
-    IFACES=$(ip -o link show | awk -F': ' '{print $2}')
-    for IFACE in $IFACES; do
-        if [ $IFACE != "lo" ]; then
-            RECEIVE1=$(($(ip -s -c link show $IFACE | tail -n3 | head -n 1 | cut -d " " -f5) + $RECEIVE1))
-        fi
+    for iface_path in "$statdir"/*; do
+        iface=$(basename "$iface_path")
+        [[ "$iface" == "lo" ]] && continue
+        rx_file="$iface_path/statistics/rx_bytes"
+        [[ -f "$rx_file" ]] || continue
+        receive1=$((receive1 + $(cat "$rx_file" 2>/dev/null)))
     done
-    
+
     sleep 1
 
-    IFACES=$(ip -o link show | awk -F': ' '{print $2}')
-    for IFACE in $IFACES; do
-        if [ $IFACE != "lo" ]; then
-            RECEIVE2=$(($(ip -s -c link show $IFACE | tail -n3 | head -n 1 | cut -d " " -f5) + $RECEIVE2))
-        fi
+    for iface_path in "$statdir"/*; do
+        iface=$(basename "$iface_path")
+        [[ "$iface" == "lo" ]] && continue
+        rx_file="$iface_path/statistics/rx_bytes"
+        [[ -f "$rx_file" ]] || continue
+        receive2=$((receive2 + $(cat "$rx_file" 2>/dev/null)))
     done
-    
-    echo "$PREFIX$(expr $(expr $RECEIVE2 - $RECEIVE1 ) / 1000)KB/s"
+
+    local kbps=$(((receive2 - receive1) / 1000))
+    echo "$PREFIX${kbps}KB/s"
 }
 
 get_down_traffic

@@ -1,16 +1,31 @@
 #!/bin/bash
 
-# Prints out if there is an ethernet cable connected
+# Prints out if there is an ethernet cable connected (any wired iface)
 
 ETHERNET_ICON=''
+NET_DIR=${NET_DIR:-/sys/class/net}
 
-get_ethernet()
-{
-    if [ -d /sys/class/net/eth? ]; then
-        if [ "$(cat /sys/class/net/eth?/carrier)" == "1" ]; then
+get_ethernet() {
+    # Look for any non-loopback interface that is up or with carrier 1
+    for iface_path in "$NET_DIR"/*; do
+        iface=$(basename "$iface_path")
+        [[ "$iface" == "lo" ]] && continue
+        # Skip common wireless interfaces
+        [[ "$iface" == wl* ]] && continue
+        [[ ! -d "$iface_path" ]] && continue
+
+        carrier_file="$iface_path/carrier"
+        operstate_file="$iface_path/operstate"
+
+        if [[ -f "$carrier_file" && "$(cat "$carrier_file" 2>/dev/null)" == "1" ]]; then
             echo "$ETHERNET_ICON"
+            return 0
         fi
-    fi
+        if [[ -f "$operstate_file" && "$(cat "$operstate_file" 2>/dev/null)" == "up" ]]; then
+            echo "$ETHERNET_ICON"
+            return 0
+        fi
+    done
 }
 
 get_ethernet

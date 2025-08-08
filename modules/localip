@@ -3,12 +3,21 @@
 # Prints out your local IP
 
 PREFIX='ᯤ '
+IFACE=${LOCAL_IP_IFACE:-}
 
-get_local_ip()
-{
-	IP=$(ip addr | grep -e "inet " | awk 'NR==2' | sed 's/^.*inet.//g; s/\/.*//g')
+get_local_ip() {
+    local ip_line
+    if command -v ip >/dev/null 2>&1; then
+        if [[ -n "$IFACE" ]]; then
+            ip_line=$(ip -o -4 addr show dev "$IFACE" 2>/dev/null | awk '{print $4}' | sed 's/\/.\+$//')
+        else
+            ip_line=$(ip -o -4 addr show scope global 2>/dev/null | awk '{print $4}' | head -n1 | sed 's/\/.\+$//')
+        fi
+    else
+        ip_line=$(hostname -I 2>/dev/null | awk '{print $1}')
+    fi
 
-	echo "$PREFIX$IP"
+    echo "$PREFIX${ip_line}"
 }
 
 get_local_ip

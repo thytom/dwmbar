@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Minimal mock redshift -p output
+if [[ "$1" == "-p" ]]; then
+  cat <<'EOF'
+Redshift-1.12
+Period: Daytime
+Temperature: 5500K
+EOF
+  exit 0
+fi
+exit 1

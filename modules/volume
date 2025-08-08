@@ -1,20 +1,64 @@
 #!/bin/bash
 
-# Prints out the volume percentage
+# Prints out the volume percentage (supports PipeWire and PulseAudio)
 
 VOLUME_ON_ICON=''
 VOLUME_MUTED_ICON=''
 
-get_volume(){
-        curStatus=$(pactl get-sink-mute @DEFAULT_SINK@)
-        volume=$(pactl get-sink-volume @DEFAULT_SINK@ | tail -n 2 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' | head -n 1)
+print_volume() {
+    local volume muted
 
-        if [ "${curStatus}" = 'Mute: yes' ]
-        then
-            echo "$VOLUME_MUTED_ICON  $volume%"
-        else
-            echo "$VOLUME_ON_ICON  $volume%"
+    if command -v wpctl >/dev/null 2>&1; then
+        # PipeWire
+        local sink_info
+        sink_info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
+        [[ -z "$sink_info" ]] && echo " " && return 0
+        volume=$(echo "$sink_info" | awk '{print int($2 * 100)}')
+        [[ "$sink_info" =~ MUTED ]] && muted=true || muted=false
+    elif command -v pactl >/dev/null 2>&1; then
+        # PulseAudio
+        local sink
+        sink=$(pactl get-default-sink 2>/dev/null)
+        if [[ -z "$sink" ]]; then
+            # Fallback to legacy interface
+            volume=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | tail -n 2 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' | head -n 1)
+            curStatus=$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null)
+            if [[ -z "$volume" && -z "$curStatus" ]]; then
+                echo " "
+                return 0
+            fi
+            if [[ "$curStatus" = 'Mute: yes' ]]; then
+                echo "$VOLUME_MUTED_ICON  ${volume:-0}%"
+            else
+                echo "$VOLUME_ON_ICON  ${volume:-0}%"
+            fi
+            return 0
         fi
+
+        local sink_info
+        sink_info=$(pactl list sinks 2>/dev/null | awk -v s="Name: $sink" 'BEGIN{p=0} $0~s{p=1} p && /Mute:|Volume:/{print} NR>5000{exit}')
+        if [[ -z "$sink_info" ]]; then
+            echo " "
+            return 0
+        fi
+        volume=$(echo "$sink_info" | awk '/Volume:/{print $5; exit}' | sed 's/%//')
+        muted=$(echo "$sink_info" | awk '/Mute:/{print $2; exit}')
+        if [[ "$muted" == "yes" ]]; then
+            echo "$VOLUME_MUTED_ICON  ${volume:-0}%"
+        else
+            echo "$VOLUME_ON_ICON  ${volume:-0}%"
+        fi
+        return 0
+    else
+        echo " "
+        return 0
+    fi
+
+    if [[ "$muted" == true || "$muted" == "yes" ]]; then
+        echo "$VOLUME_MUTED_ICON  ${volume:-0}%"
+    else
+        echo "$VOLUME_ON_ICON  ${volume:-0}%"
+    fi
 }
 
-get_volume
+print_volume

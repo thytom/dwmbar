@@ -4,8 +4,11 @@
 
 PREFIX=' '
 
-get_ram()
-{
+get_ram() {
+    if ! command -v free >/dev/null 2>&1; then
+        echo ""
+        return 0
+    fi
     USED_RAM=$(free | awk '/Mem/{printf("%d"), $3/$2*100}')
     echo "$PREFIX$USED_RAM%"
 }
