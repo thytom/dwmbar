@@ -4,7 +4,8 @@
 # Requires tor
 
 TOR_ENABLED='ﴣ'
-# Unused, kept for compatibility
+# shellcheck disable=SC2034
+# Unused, kept for compatibility with older configs
 TOR_DISABLED=''
 
 get_tor()
