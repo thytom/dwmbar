@@ -1,46 +1,44 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 # Copyright 2019 Archie Hilton <archie.hilton1@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-or-later
 
-# This program is free software: you can redistribute it and/or modify
-#     it under the terms of the GNU General Public License as published by
-#     the Free Software Foundation, either version 3 of the License, or
-#     (at your option) any later version.
-#
-#     This program is distributed in the hope that it will be useful,
-#     but WITHOUT ANY WARRANTY; without even the implied warranty of
-#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#     GNU General Public License for more details.
-#
-#     You should have received a copy of the GNU General Public License
-#     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-DWMBAR="/usr/bin/dwmbar"
-
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root" > /dev/stderr
-  exit 1
+if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
+  if command -v sudo >/dev/null 2>&1; then
+    echo "Elevating with sudo to install to system directories..."
+    exec sudo -E bash "$0" "$@"
+  else
+    echo "Please run as root (sudo not found)." >&2
+    exit 1
+  fi
 fi
 
-if [[ ! -f "dwmbar" ]]; then
-	echo "dwmbar executable not found." > /dev/stderr
-	exit 1
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+REPO_ROOT="$SCRIPT_DIR"
+
+[[ -f "$REPO_ROOT/dwmbar" ]] || { echo "dwmbar executable not found." >&2; exit 1; }
+[[ -d "$REPO_ROOT/modules" ]] || { echo "modules directory not found." >&2; exit 1; }
+[[ -f "$REPO_ROOT/bar.sh" ]] || { echo "bar.sh not found." >&2; exit 1; }
+[[ -f "$REPO_ROOT/config" ]] || { echo "config file not found." >&2; exit 1; }
+
+BIN_DEST="/usr/bin/dwmbar"
+SHARE_DIR="/usr/share/dwmbar"
+MOD_DEST="$SHARE_DIR/modules"
+
+install -d "$SHARE_DIR"
+
+rm -rf "$MOD_DEST"
+cp -rT "$REPO_ROOT/modules" "$MOD_DEST"
+
+install -m 0755 "$REPO_ROOT/bar.sh" "$SHARE_DIR/bar.sh"
+install -m 0644 "$REPO_ROOT/config" "$SHARE_DIR/config"
+
+# Install optional JSON config if present
+if [[ -f "$REPO_ROOT/config.json" ]]; then
+  install -m 0644 "$REPO_ROOT/config.json" "$SHARE_DIR/config.json"
 fi
 
-# Create /usr/share/dwmbar
-# Containing example bar.sh and modules
+install -m 0755 "$REPO_ROOT/dwmbar" "$BIN_DEST"
 
-mkdir --parents "/usr/share/dwmbar/"
-
-echo "./modules --> /usr/share/dwmbar/modules"
-cp -rT "./modules" "/usr/share/dwmbar/modules"
-
-echo "./bar.sh --> /usr/share/dwmbar/bar.sh"
-cp "./bar.sh" "/usr/share/dwmbar/bar.sh"
-
-echo "./config --> /usr/share/dwmbar/config"
-cp -r "./config" "/usr/share/dwmbar/config"
-
-echo "./dwmbar --> /usr/bin/dwmbar"
-cp "./dwmbar" "/usr/bin/dwmbar"
-[[ $? -eq 0 ]] && echo "Installation completed successfully"
+echo "Installation completed successfully."

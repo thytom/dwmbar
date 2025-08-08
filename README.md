@@ -4,7 +4,7 @@ dwmbar - A Modular Status Bar for dwm
 
 dwmbar is a very simple status bar written for dwm.
 
-**This project is no longer actively maintained. You will likely not receive support from the devs if something's not right. If you are somebody who is interested in taking over this project, please contact me (thytom) and we can discuss adding you as a contributor. You are also more than welcome to fork the project if you wish to make improvements on your own.**
+**Maintenance status:** Historically this project was unmaintained. Community maintenance is now being taken on by @robinhirst11, who is willing to steward fixes and improvements. Issues and PRs are welcome.
 
 # Installation
 
@@ -42,11 +42,16 @@ $ sudo ./install.sh
 dwmbar works by setting the root window name, which dwm displays. It does this
 by calling a config file. At runtime, dwmbar will use `~/.config/dwmbar/config` if it
 exists, otherwise it will fall back to the default `/usr/share/dwmbar/config`.
+
+Optionally, you can configure dwmbar with JSON via `~/.config/dwmbar/config.json`
+or `/usr/share/dwmbar/config.json`. If `jq` is installed, dwmbar will prefer the JSON
+config when present; otherwise it will ignore JSON and use the bash `config`.
 You can copy defaults into your home directory with:
 
 ```bash
 dwmbar -c
 ```
+This copies both `config` and `config.json` into `~/.config/dwmbar/`.
 
 Add the line `dwmbar &` to your .xinitrc file to run on startup. You can also
 run `dwmbar` in terminal for testing purposes.
@@ -58,6 +63,10 @@ run `dwmbar` in terminal for testing purposes.
 Most non-modular configuration is done in `~/.config/dwmbar/config`, a bash
 script that calls module scripts in turn, caching their output and then
 constructing the bar from that.
+
+Alternatively, you can use a JSON file at `~/.config/dwmbar/config.json` (requires `jq`).
+JSON keys map to the same variables: `modules`, `online_modules`, `delay`,
+`separator`, `left_padding`, `right_padding` (and `custom_dir` if you want to override).
 
 To add a module to the bar, simply include its name in the MODULES variable:
 
