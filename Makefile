@@ -11,8 +11,8 @@ test:
 lint:
 	@command -v shellcheck >/dev/null 2>&1 || { echo "shellcheck not installed"; exit 0; }
 	@echo "Running shellcheck..."
-	@find modules -type f -maxdepth 1 -exec shellcheck -x {} +
-	@shellcheck -x bar.sh dwmbar
+	@find modules -maxdepth 1 -type f -exec shellcheck -x -P SCRIPTDIR {} +
+	@shellcheck -x -P SCRIPTDIR bar.sh dwmbar
 
 # Format with shfmt (if installed)
 fmt:

@@ -4,6 +4,7 @@
 # Requires tor
 
 TOR_ENABLED='ﴣ'
+# Unused, kept for compatibility
 TOR_DISABLED=''
 
 get_tor()

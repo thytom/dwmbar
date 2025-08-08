@@ -14,7 +14,7 @@
 #
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-if [[ ! -z $CACHE_DIR ]]; then
+if [[ -n $CACHE_DIR ]]; then
 	OUTPUT_CACHE="$CACHE_DIR"
 else
 	OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
@@ -23,15 +23,14 @@ fi
 export LC_ALL=C
 export LANG=C
 
+ # shellcheck source=/dev/null
 source "$CONFIG_FILE"
-
-OUTPUT=""
 
 get_bar()
 {
 	for module in $MODULES; do
-		if [[ $INTERNET -eq 0 ]] || [[ $ONLINE_MODULES != *"$module"* ]];then
-			module_out="$(cat "$OUTPUT_CACHE""$module" | sed 's/\.$//g')"
+        if [[ $INTERNET -eq 0 ]] || [[ $ONLINE_MODULES != *"$module"* ]];then
+            module_out="$(sed 's/\.$//g' "$OUTPUT_CACHE$module")"
 			bar="$bar$module_out"
 		fi
 	done

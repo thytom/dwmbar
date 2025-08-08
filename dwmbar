@@ -86,6 +86,8 @@ while getopts 'vc' flag; do
 			exit 0				;;
 		c)	copy_usr_to_home
 			exit 0				;;
+        *)  print_help
+            exit 1              ;;
 	esac
 done
 
