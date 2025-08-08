@@ -1,8 +1,10 @@
 #!/bin/bash
+set -euo pipefail
+. "$(dirname "$0")/../lib/common.sh"
+. "$(dirname "$0")/../lib/cache.sh"
 
 PREFIX='  Updates: '
-CACHE_DIR=${CACHE_DIR:-/tmp}
-CACHE_FILE="$CACHE_DIR/pacman_updates"
+CACHE_KEY="arch_updates"
 CACHE_DURATION=${ARCH_UPDATES_CACHE_SECONDS:-300}
 
 get_updates() {
@@ -21,12 +23,12 @@ get_updates() {
     fi
 
     total=$((updates_arch + updates_aur))
-    echo "$total" > "$CACHE_FILE"
+    cache_write "$CACHE_KEY" "$total"
     echo "$PREFIX$total"
 }
 
-if [[ -f "$CACHE_FILE" && $(($(date +%s) - $(stat -c %Y "$CACHE_FILE"))) -lt $CACHE_DURATION ]]; then
-    echo "$PREFIX$(cat "$CACHE_FILE")"
+if cached=$(cache_read "$CACHE_KEY" "$CACHE_DURATION" 2>/dev/null); then
+    echo "$PREFIX$cached"
 else
     get_updates
 fi
