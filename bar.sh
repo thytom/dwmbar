@@ -20,6 +20,9 @@ else
 	OUTPUT_CACHE="/home/$USER/.config/dwmbar/.cache/"
 fi
 
+export LC_ALL=C
+export LANG=C
+
 source "$CONFIG_FILE"
 
 OUTPUT=""

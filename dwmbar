@@ -90,12 +90,13 @@ while getopts 'vc' flag; do
 done
 
 check_internet() {
-		wget --spider -q --timeout=2 https://www.google.com
-		if [[ $? -eq 0 ]]; then
-			echo 0
-		else
-			echo 1
-		fi
+        if command -v ping >/dev/null 2>&1; then
+            ping -c 1 -W 1 1.1.1.1 >/dev/null 2>&1 && echo 0 || echo 1
+        elif command -v wget >/dev/null 2>&1; then
+            wget --spider -q --timeout=2 https://www.google.com && echo 0 || echo 1
+        else
+            echo 1
+        fi
 }
 
 check_files
