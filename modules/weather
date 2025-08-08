@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+. "$(dirname "$0")/../lib/common.sh"
 
 # Deps:
 # 	curl
@@ -9,13 +11,7 @@ LOCATION_PARAM=${WEATHER_LOCATION:-}
 QUERY="${URL}${LOCATION_PARAM:+/$LOCATION_PARAM}?format=%l:+%c+%t%20(%C)"
 
 get_weather() {
-    if ! command -v curl >/dev/null 2>&1; then
-        echo ""
-        return 0
-    fi
-    curl -s --max-time 2 "$QUERY"
+    safe_curl "$QUERY" 2 || true
 }
 
-if [ $(( 10#$(date '+%S') % 30 )) -eq 0 ]; then
-    get_weather
-fi
+get_weather

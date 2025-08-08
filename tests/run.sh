@@ -45,6 +45,16 @@ for module_path in "$MODULES_DIR"/*; do
   "${timeout_cmd[@]}" bash "$module_path" >"$out_file" 2>"$err_file"
   status=$?
 
+  # Optional golden output assertion
+  if [[ -f "$ROOT_DIR/tests/expected/${module_name}.txt" ]]; then
+    if ! diff -u "$ROOT_DIR/tests/expected/${module_name}.txt" "$out_file" >/dev/null 2>&1; then
+      echo "FAIL $module_name (output mismatch)"
+      echo "  expected: $(cat "$ROOT_DIR/tests/expected/${module_name}.txt")"
+      echo "  actual:   $(cat "$out_file")"
+      status=1
+    fi
+  fi
+
   if [[ $status -eq 0 ]]; then
     echo "PASS $module_name"
     pass=$((pass+1))

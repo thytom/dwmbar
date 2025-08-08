@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+. "$(dirname "$0")/../lib/common.sh"
 
 # Prints out your public IP address
 # Depends on curl
@@ -7,11 +9,8 @@ PREFIX=' '
 URL=${PUBLIC_IP_URL:-https://ifconfig.co}
 
 get_pub_ip() {
-    if ! command -v curl >/dev/null 2>&1; then
-        echo " "
-        return 0
-    fi
-    echo "$PREFIX$(curl -s --max-time 2 "$URL")"
+    out=$(safe_curl "$URL" 2 || true)
+    echo "$PREFIX$out"
 }
 
 get_pub_ip

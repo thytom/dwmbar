@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+. "$(dirname "$0")/../lib/common.sh"
 
 # Prints out if there is an ethernet cable connected (any wired iface)
 
