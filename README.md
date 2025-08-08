@@ -173,6 +173,10 @@ This removes `/usr/share/dwmbar` and `/usr/bin/dwmbar`. If you previously
 copied configuration to your home directory via `dwmbar -c`, you may also
 remove `~/.config/dwmbar` manually if desired.
 
+# Join our amazing community as a code contributor
+
+[![Contributors](https://contrib.rocks/image?repo=thytom/dwmbar&anon=0&columns=25&max=100&r=true)](https://github.com/thytom/dwmbar/graphs/contributors)
+
 # Feature Wishlist
 
 * Paralellised Modules
