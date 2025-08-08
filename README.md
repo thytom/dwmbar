@@ -86,8 +86,10 @@ touched, and edit it there.**
 Modules can be written in any language, so long as they are executable and
 print their output to stdout.
 
-Currently available default modules are:
-- archupdates		 - Gets the number of updates available **Arch Linux Only**
+<details>
+<summary><strong>Available default modules</strong></summary>
+
+- archupdates		 - Gets the number of updates available <em>Arch Linux Only</em>
 - backlight			 - Shows the brightness of the screen
 - battery			 - Gets battery percentage
 - bluetooth			 - Shows bluetooth status
@@ -113,53 +115,60 @@ Currently available default modules are:
 - time				 - Displays time
 - todo				 - Prints the number of todos for the "t" todo manager
 - tor				 - Prints if the tor service is enabled
-- voidupdates        - Gets the number of updates available **Void Linux Only**
+- voidupdates        - Gets the number of updates available <em>Void Linux Only</em>
 - volumebar			 - Displays a volume bar
 - volume			 - Prints volume in %
 - weather			 - Shows weather info
 - wifi				 - Shows wifi connection
 
+</details>
+
 ## Module Prerequisites
 
+<details>
+<summary><strong>Show module prerequisites</strong></summary>
+
 See Module Dependencies
- * archupdates
+ - archupdates
 	- Arch Linux
 	- yay
 	- pacman-contrib
-* backlight
+ - backlight
 	- light
-* bluetooth
+ - bluetooth
 	- bluez
-* fanspeed
-        - lm_sensors
-* mail
+ - fanspeed
+	- lm_sensors
+ - mail
 	- mutt/neomutt (We recommend [Luke Smith's Mutt-Wizard](https://github.com/LukeSmithxyz/mutt-wizard)) for configuration.
-* mpd
+ - mpd
 	- mpd
 	- mpc
-* publicip
-    - curl
-* redshift
+ - publicip
+	- curl
+ - redshift
 	- redshift
-* sunmoon
+ - sunmoon
 	- redshift
-* temperature
+ - temperature
 	- lm_sensors
-* todo
+ - todo
 	- [t todo manager](https://github.com/sjl/t)
-* tor
+ - tor
 	- tor
-* voidupdates
-    - xbps package manager
-* volume
+ - voidupdates
+	- xbps package manager
+ - volume
 	- PulseAudio or PipeWire
-* volumebar
+ - volumebar
 	- PulseAudio or PipeWire
-* weather
+ - weather
 	- curl
 	- Internet connection
-* wifi
+ - wifi
 	- Wifi card
+
+</details>
 
 ## Uninstallation
 
@@ -179,8 +188,13 @@ remove `~/.config/dwmbar` manually if desired.
 
 # Feature Wishlist
 
-* Paralellised Modules
+<details>
+<summary><strong>Show wishlist</strong></summary>
+
+- Paralellised Modules
 	- Some modules are slower than others. Have modules set a DELAY variable;
 		if they don't have one, use a default.
 	- Modules are called and bar is updated when a module finishes, but an
 		internal bar clock updates the clock at a specific delay.
+
+</details>
