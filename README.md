@@ -40,7 +40,13 @@ $ sudo ./install.sh
 # Usage
 
 dwmbar works by setting the root window name, which dwm displays. It does this
-by calling the dwmbarrc file in your .config/dwmbar folder.
+by calling a config file. At runtime, dwmbar will use `~/.config/dwmbar/config` if it
+exists, otherwise it will fall back to the default `/usr/share/dwmbar/config`.
+You can copy defaults into your home directory with:
+
+```bash
+dwmbar -c
+```
 
 Add the line `dwmbar &` to your .xinitrc file to run on startup. You can also
 run `dwmbar` in terminal for testing purposes.
@@ -49,9 +55,9 @@ run `dwmbar` in terminal for testing purposes.
 
 ## Configuring the Bar
 
-Most non-modular configuration is done in `~/.config/dwmbar/dwmbarrc`, a bash
-script that calls scripts in turn, caching their output and then constructing
-the bar from that.
+Most non-modular configuration is done in `~/.config/dwmbar/config`, a bash
+script that calls module scripts in turn, caching their output and then
+constructing the bar from that.
 
 To add a module to the bar, simply include its name in the MODULES variable:
 
@@ -63,10 +69,8 @@ Modules are displayed left-to-right in the order they are written in `MODULES`.
 By default, they are delimited by the `SEPARATOR` variable, which you can
 change.
 
-We also offer a `PADDING` variable, which contains a string you can include at
-the start of your bar, on the very right. This can either be padding spaces, to
-move the bar away from the right edge, or even text. By default, we set
-`PADDING` to `$USER@$HOSTNAME`. Feel free to change this.
+You can also set `LEFT_PADDING` and `RIGHT_PADDING` in the config to add
+extra spacing (or text) at the left/right ends of the bar.
 
 ## Writing Modules
 
@@ -94,7 +98,7 @@ Currently available default modules are:
 - ethernet			 - Shows ethernet connection
 - fanspeed           - Shows the rpm of your main fan
 - hostname           - Shows your current user and hostname
-- internet			 - Shows whether internet is available (TODO)
+- internet			 - Shows whether internet is available
 - kernel             - Shows the kernel version
 - localip            - Shows your local IP address
 - mail				 - Shows how much mail you have
@@ -105,7 +109,7 @@ Currently available default modules are:
 - ram				 - Shows RAM usage
 - redshift			 - Shows current screen temperature from Redshift
 - sunmoon			 - Displays a sun or moon for time of day
-- temperature		 - Displays the temperature of the CPU
+- cputemp		 - Displays the temperature of the CPU
 - time				 - Displays time
 - todo				 - Prints the number of todos for the "t" todo manager
 - tor				 - Prints if the tor service is enabled
@@ -148,14 +152,26 @@ See Module Dependencies
 * voidupdates
     - xbps package manager
 * volume
-	- pulseaudio
+	- PulseAudio or PipeWire
 * volumebar
-	- pulseaudio
+	- PulseAudio or PipeWire
 * weather
 	- curl
 	- Internet connection
 * wifi
 	- Wifi card
+
+## Uninstallation
+
+If you installed manually using the provided scripts, you can uninstall with:
+
+```bash
+sudo ./uninstall.sh
+```
+
+This removes `/usr/share/dwmbar` and `/usr/bin/dwmbar`. If you previously
+copied configuration to your home directory via `dwmbar -c`, you may also
+remove `~/.config/dwmbar` manually if desired.
 
 # Feature Wishlist
 
