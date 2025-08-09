@@ -3,23 +3,26 @@
 PREFIX_PLAY=' '
 PREFIX_PAUSE=' '
 
-get_mpd()
-{
-	current_song="$(mpc current)"
+get_mpd() {
+    if ! command -v mpc >/dev/null 2>&1; then
+        echo " "
+        return 0
+    fi
+    current_song="$(mpc current)"
 
-	if [[ "$current_song" = "" ]]; then
-		echo " "
-		exit 0
-	else
-		playpause=$(mpc | awk '/\[.*]/{split($0, a, " "); print a[1]}')
-		if [[ "$playpause" = "[playing]" ]]; then
-			current_song="$PREFIX_PLAY $current_song"
-		elif [[ "$playpause" = "[paused]" ]]; then
-			current_song="$PREFIX_PAUSE $current_song"
-		fi
-	fi
+    if [[ -z "$current_song" ]]; then
+        echo " "
+        return 0
+    else
+        playpause=$(mpc 2>/dev/null | awk '/\[.*]/{split($0, a, " "); print a[1]}')
+        if [[ "$playpause" = "[playing]" ]]; then
+            current_song="$PREFIX_PLAY $current_song"
+        elif [[ "$playpause" = "[paused]" ]]; then
+            current_song="$PREFIX_PAUSE $current_song"
+        fi
+    fi
 
-	echo "$current_song"
+    echo "$current_song"
 }
 
 get_mpd

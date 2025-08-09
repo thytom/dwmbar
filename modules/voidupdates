@@ -1,18 +1,28 @@
 #!/bin/bash
+set -euo pipefail
+# shellcheck source=../lib/common.sh
+. "$(dirname "$0")/../lib/common.sh"
+# shellcheck source=../lib/cache.sh
+. "$(dirname "$0")/../lib/cache.sh"
 
 # Prints the number of updates for Void Linux
 
 PREFIX=' Updates: '
+CACHE_KEY="void_updates"
+CACHE_DURATION=${VOID_UPDATES_CACHE_SECONDS:-300}
 
-get_updates()
-{
-    if ! updates=$(xbps-install -Mun 2> /dev/null | wc -l ); then
-        updates=0
+get_updates() {
+    if have xbps-install; then
+        if ! updates=$(xbps-install -Mun 2> /dev/null | wc -l ); then
+            updates=0
+        fi
+        cache_write "$CACHE_KEY" "$updates"
+        echo "$PREFIX$updates"
     fi
-    
-    echo "$PREFIX$updates"
 }
 
-if [ $(( 10#$(date '+%M') % 3 )) -eq 0 ] && [ $(( 10#$(date '+%S') )) -eq 5 ]; then
+if cached=$(cache_read "$CACHE_KEY" "$CACHE_DURATION" 2>/dev/null); then
+    echo "$PREFIX$cached"
+else
     get_updates
 fi

@@ -4,8 +4,10 @@ PREFIX=' '
 
 get_day_percentage()
 {
-    local hour=$(date '+%H')
-    local minute=$(date '+%M')
+    local hour
+    hour=$(date '+%H')
+    local minute
+    minute=$(date '+%M')
     local minutes=$((hour * 60 + minute))
     local percentage=$(((minutes * 100) / 1440))
     

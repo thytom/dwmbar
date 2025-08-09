@@ -1,0 +1,20 @@
+{
+  "modules": [
+    "weather",
+    "volumebar",
+    "wifi",
+    "internet",
+    "cpuload",
+    "cputemp",
+    "date",
+    "time"
+  ],
+  "online_modules": [
+    "weather",
+    "internet"
+  ],
+  "delay": 0.05,
+  "separator": " | ",
+  "right_padding": " ",
+  "left_padding": " "
+}

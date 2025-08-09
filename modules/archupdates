@@ -1,16 +1,21 @@
 #!/bin/bash
+set -euo pipefail
+# shellcheck source=../lib/common.sh
+. "$(dirname "$0")/../lib/common.sh"
+# shellcheck source=../lib/cache.sh
+. "$(dirname "$0")/../lib/cache.sh"
 
 PREFIX='  Updates: '
-CACHE_FILE="/tmp/pacman_updates_$$"
-CACHE_DURATION=300
+CACHE_KEY="arch_updates"
+CACHE_DURATION=${ARCH_UPDATES_CACHE_SECONDS:-300}
 
 get_updates() {
     local updates_arch=0 updates_aur=0 total=0
-    
+
     if command -v checkupdates >/dev/null 2>&1; then
         updates_arch=$(checkupdates 2>/dev/null | wc -l)
     fi
-    
+
     if command -v yay >/dev/null 2>&1; then
         updates_aur=$(yay -Qum 2>/dev/null | wc -l)
     elif command -v paru >/dev/null 2>&1; then
@@ -18,14 +23,14 @@ get_updates() {
     elif command -v trizen >/dev/null 2>&1; then
         updates_aur=$(trizen -Qum 2>/dev/null | wc -l)
     fi
-    
+
     total=$((updates_arch + updates_aur))
-    echo "$total" > "$CACHE_FILE"
+    cache_write "$CACHE_KEY" "$total"
     echo "$PREFIX$total"
 }
 
-if [[ -f "$CACHE_FILE" && $(($(date +%s) - $(stat -c %Y "$CACHE_FILE"))) -lt $CACHE_DURATION ]]; then
-    echo "$PREFIX$(cat "$CACHE_FILE")"
+if cached=$(cache_read "$CACHE_KEY" "$CACHE_DURATION" 2>/dev/null); then
+    echo "$PREFIX$cached"
 else
     get_updates
 fi

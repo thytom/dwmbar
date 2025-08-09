@@ -52,6 +52,10 @@ print_help(){
 copy_usr_to_home(){
 	mkdir -p "$CUSTOM_DIR"
 	cp -r "$DEFAULT_CONFIG_LOCATION" "$CONFIG_DIR"
+	# Also copy JSON config if available
+	if [[ -f "$DEFAULT_CONFIG_DIR/config.json" ]]; then
+		cp -r "$DEFAULT_CONFIG_DIR/config.json" "$CONFIG_DIR"
+	fi
 }
 
 check_files(){
@@ -86,19 +90,45 @@ while getopts 'vc' flag; do
 			exit 0				;;
 		c)	copy_usr_to_home
 			exit 0				;;
+        *)  print_help
+            exit 1              ;;
 	esac
 done
 
 check_internet() {
-		wget --spider -q --timeout=2 https://www.google.com
-		if [[ $? -eq 0 ]]; then
-			echo 0
-		else
-			echo 1
-		fi
+        if command -v ping >/dev/null 2>&1; then
+            ping -c 1 -W 1 1.1.1.1 >/dev/null 2>&1 && echo 0 || echo 1
+        elif command -v wget >/dev/null 2>&1; then
+            wget --spider -q --timeout=2 https://www.google.com && echo 0 || echo 1
+        else
+            echo 1
+        fi
 }
 
 check_files
+
+# Prefer JSON config if present and jq is available by generating
+# a bash-compatible config file in the cache directory
+CONFIG_JSON_FILE=""
+if [[ -f "$CONFIG_DIR/config.json" ]]; then
+    CONFIG_JSON_FILE="$CONFIG_DIR/config.json"
+elif [[ -f "$DEFAULT_CONFIG_DIR/config.json" ]]; then
+    CONFIG_JSON_FILE="$DEFAULT_CONFIG_DIR/config.json"
+fi
+
+if [[ -n "$CONFIG_JSON_FILE" ]] && command -v jq >/dev/null 2>&1; then
+    GEN_FILE="$CACHE_DIR/config.from_json"
+    jq -r --arg home "$HOME" '
+      def to_bash($name; $value): $name + "=" + @sh($value);
+      to_bash("MODULES"; ((.modules // []) | map(tostring) | join(" "))),
+      to_bash("ONLINE_MODULES"; ((.online_modules // []) | map(tostring) | join(" "))),
+      to_bash("DELAY"; ((.delay // "0.05")|tostring)),
+      to_bash("CUSTOM_DIR"; (.custom_dir // ($home + "/.config/dwmbar/modules/custom/"))),
+      to_bash("SEPARATOR"; (.separator // " | ")),
+      to_bash("RIGHT_PADDING"; (.right_padding // " ")),
+      to_bash("LEFT_PADDING"; (.left_padding // " "))
+    ' "$CONFIG_JSON_FILE" > "$GEN_FILE" && CONFIG_FILE="$GEN_FILE" && export CONFIG_FILE
+fi
 
 while :; do
 	date=$(date +'%S')

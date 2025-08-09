@@ -5,9 +5,18 @@
 
 PREFIX=''
 
-get_redshift()
-{
-    echo "$PREFIX$(redshift -p 2> /dev/null | grep "temp" | awk '{print $3}')"
+get_redshift() {
+    if ! command -v redshift >/dev/null 2>&1; then
+        echo ""
+        return 0
+    fi
+    temp=$(redshift -p 2> /dev/null | grep -i "temp" | awk '{print $3}')
+    if [[ -n "$temp" ]]; then
+        echo "$PREFIX$temp"
+    else
+        echo ""
+    fi
+    return 0
 }
 
 get_redshift

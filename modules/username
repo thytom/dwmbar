@@ -4,11 +4,9 @@
 
 PREFIX=''
 
-get_username()
-{
-	USERNAME=$(whoami)
-	
-	echo "$PREFIX $USERNAME"
+get_username() {
+    USERNAME=${USER:-$(id -un)}
+    echo "$PREFIX $USERNAME"
 }
 
 get_username

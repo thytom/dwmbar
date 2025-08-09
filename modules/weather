@@ -1,15 +1,17 @@
 #!/bin/bash
+set -euo pipefail
+. "$(dirname "$0")/../lib/common.sh"
 
 # Deps:
 # 	curl
 
 
-get_weather()
-{
-	curl -s v2.wttr.in | grep -e "Weather" | sed -n 2p | sed s/Weather://g | sed 's/,//g' | sed 's/+//g' | sed 's/°C.*/°C/' | sed 's/.*m//'
+URL=${WEATHER_URL:-https://v2.wttr.in}
+LOCATION_PARAM=${WEATHER_LOCATION:-}
+QUERY="${URL}${LOCATION_PARAM:+/$LOCATION_PARAM}?format=%l:+%c+%t%20(%C)"
+
+get_weather() {
+    safe_curl "$QUERY" 2 || true
 }
 
-
-if [ $(( 10#$(date '+%S') % 30 )) -eq 0 ]; then
-	get_weather
-fi
+get_weather

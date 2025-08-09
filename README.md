@@ -4,7 +4,7 @@ dwmbar - A Modular Status Bar for dwm
 
 dwmbar is a very simple status bar written for dwm.
 
-**This project is no longer actively maintained. You will likely not receive support from the devs if something's not right. If you are somebody who is interested in taking over this project, please contact me (thytom) and we can discuss adding you as a contributor. You are also more than welcome to fork the project if you wish to make improvements on your own.**
+**Maintenance status:** Historically this project was unmaintained. Community maintenance is now being taken on by [robinhirst11](https://github.com/RobinHirst11/), who is willing to steward fixes and improvements. Issues and PRs are welcome.
 
 # Installation
 
@@ -40,7 +40,18 @@ $ sudo ./install.sh
 # Usage
 
 dwmbar works by setting the root window name, which dwm displays. It does this
-by calling the dwmbarrc file in your .config/dwmbar folder.
+by calling a config file. At runtime, dwmbar will use `~/.config/dwmbar/config` if it
+exists, otherwise it will fall back to the default `/usr/share/dwmbar/config`.
+
+Optionally, you can configure dwmbar with JSON via `~/.config/dwmbar/config.json`
+or `/usr/share/dwmbar/config.json`. If `jq` is installed, dwmbar will prefer the JSON
+config when present; otherwise it will ignore JSON and use the bash `config`.
+You can copy defaults into your home directory with:
+
+```bash
+dwmbar -c
+```
+This copies both `config` and `config.json` into `~/.config/dwmbar/`.
 
 Add the line `dwmbar &` to your .xinitrc file to run on startup. You can also
 run `dwmbar` in terminal for testing purposes.
@@ -49,9 +60,13 @@ run `dwmbar` in terminal for testing purposes.
 
 ## Configuring the Bar
 
-Most non-modular configuration is done in `~/.config/dwmbar/dwmbarrc`, a bash
-script that calls scripts in turn, caching their output and then constructing
-the bar from that.
+Most non-modular configuration is done in `~/.config/dwmbar/config`, a bash
+script that calls module scripts in turn, caching their output and then
+constructing the bar from that.
+
+Alternatively, you can use a JSON file at `~/.config/dwmbar/config.json` (requires `jq`).
+JSON keys map to the same variables: `modules`, `online_modules`, `delay`,
+`separator`, `left_padding`, `right_padding` (and `custom_dir` if you want to override).
 
 To add a module to the bar, simply include its name in the MODULES variable:
 
@@ -63,10 +78,8 @@ Modules are displayed left-to-right in the order they are written in `MODULES`.
 By default, they are delimited by the `SEPARATOR` variable, which you can
 change.
 
-We also offer a `PADDING` variable, which contains a string you can include at
-the start of your bar, on the very right. This can either be padding spaces, to
-move the bar away from the right edge, or even text. By default, we set
-`PADDING` to `$USER@$HOSTNAME`. Feel free to change this.
+You can also set `LEFT_PADDING` and `RIGHT_PADDING` in the config to add
+extra spacing (or text) at the left/right ends of the bar.
 
 ## Writing Modules
 
@@ -82,8 +95,10 @@ touched, and edit it there.**
 Modules can be written in any language, so long as they are executable and
 print their output to stdout.
 
-Currently available default modules are:
-- archupdates		 - Gets the number of updates available **Arch Linux Only**
+<details>
+<summary><strong>Available default modules</strong></summary>
+
+- archupdates		 - Gets the number of updates available <em>Arch Linux Only</em>
 - backlight			 - Shows the brightness of the screen
 - battery			 - Gets battery percentage
 - bluetooth			 - Shows bluetooth status
@@ -94,7 +109,7 @@ Currently available default modules are:
 - ethernet			 - Shows ethernet connection
 - fanspeed           - Shows the rpm of your main fan
 - hostname           - Shows your current user and hostname
-- internet			 - Shows whether internet is available (TODO)
+- internet			 - Shows whether internet is available
 - kernel             - Shows the kernel version
 - localip            - Shows your local IP address
 - mail				 - Shows how much mail you have
@@ -105,62 +120,89 @@ Currently available default modules are:
 - ram				 - Shows RAM usage
 - redshift			 - Shows current screen temperature from Redshift
 - sunmoon			 - Displays a sun or moon for time of day
-- temperature		 - Displays the temperature of the CPU
+- cputemp		 - Displays the temperature of the CPU
 - time				 - Displays time
 - todo				 - Prints the number of todos for the "t" todo manager
 - tor				 - Prints if the tor service is enabled
-- voidupdates        - Gets the number of updates available **Void Linux Only**
+- voidupdates        - Gets the number of updates available <em>Void Linux Only</em>
 - volumebar			 - Displays a volume bar
 - volume			 - Prints volume in %
 - weather			 - Shows weather info
 - wifi				 - Shows wifi connection
 
-## Module Prerequisites
+</details>
 
-See Module Dependencies
- * archupdates
+## Module Prerequisites  <a name="module-prerequisites"></a>
+
+<details>
+<summary><strong>Show module prerequisites</strong></summary>
+
+ - archupdates
 	- Arch Linux
 	- yay
 	- pacman-contrib
-* backlight
+ - backlight
 	- light
-* bluetooth
+ - bluetooth
 	- bluez
-* fanspeed
-        - lm_sensors
-* mail
+ - fanspeed
+	- lm_sensors
+ - mail
 	- mutt/neomutt (We recommend [Luke Smith's Mutt-Wizard](https://github.com/LukeSmithxyz/mutt-wizard)) for configuration.
-* mpd
+ - mpd
 	- mpd
 	- mpc
-* publicip
-    - curl
-* redshift
+ - publicip
+	- curl
+ - redshift
 	- redshift
-* sunmoon
+ - sunmoon
 	- redshift
-* temperature
+ - temperature
 	- lm_sensors
-* todo
+ - todo
 	- [t todo manager](https://github.com/sjl/t)
-* tor
+ - tor
 	- tor
-* voidupdates
-    - xbps package manager
-* volume
-	- pulseaudio
-* volumebar
-	- pulseaudio
-* weather
+ - voidupdates
+	- xbps package manager
+ - volume
+	- PulseAudio or PipeWire
+ - volumebar
+	- PulseAudio or PipeWire
+ - weather
 	- curl
 	- Internet connection
-* wifi
+ - wifi
 	- Wifi card
+
+</details>
+
+## Uninstallation
+
+If you installed manually using the provided scripts, you can uninstall with:
+
+```bash
+sudo ./uninstall.sh
+```
+
+This removes `/usr/share/dwmbar` and `/usr/bin/dwmbar`. If you previously
+copied configuration to your home directory via `dwmbar -c`, you may also
+remove `~/.config/dwmbar` manually if desired.
+
+# Join our amazing community as a code contributor
+
+[![Contributors](https://contrib.rocks/image?repo=thytom/dwmbar&anon=0&columns=25&max=100&r=true)](https://github.com/thytom/dwmbar/graphs/contributors)
 
 # Feature Wishlist
 
-* Paralellised Modules
+<details>
+<summary><strong>Show wishlist</strong></summary>
+
+- Paralellised Modules
 	- Some modules are slower than others. Have modules set a DELAY variable;
 		if they don't have one, use a default.
 	- Modules are called and bar is updated when a module finishes, but an
 		internal bar clock updates the clock at a specific delay.
+
+</details>

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Mock yay -Qum (returns 3 AUR updates)
+if [[ "$1" == "-Qum" ]]; then
+  echo aur-pkg1
+  echo aur-pkg2
+  echo aur-pkg3
+  exit 0
+fi
+exit 1

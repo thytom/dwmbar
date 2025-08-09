@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Always succeed a single ping quickly
+exit 0

@@ -4,11 +4,14 @@
 
 PREFIX=' '
 
-get_os_name()
-{
-        OS=$(cat /etc/os-release | head -n 1 | sed 's/NAME=//g')
-
-        echo "$PREFIX$OS"
+get_os_name() {
+    local name
+    if [[ -r /etc/os-release ]]; then
+        # shellcheck disable=SC1091
+        . /etc/os-release
+        name=${NAME:-}
+    fi
+    echo "$PREFIX${name}"
 }
 
 get_os_name

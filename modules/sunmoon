@@ -6,9 +6,12 @@
 SUN_ICON='盛'
 MOON_ICON=''
 
-get_sunmoon()
-{
-    if [[ $(redshift -p | grep "Period" | awk '{print $2}') == "Night" ]]; then
+get_sunmoon() {
+    if ! command -v redshift >/dev/null 2>&1; then
+        echo "$SUN_ICON"
+        return 0
+    fi
+    if [[ $(redshift -p 2>/dev/null | grep "Period" | awk '{print $2}') == "Night" ]]; then
         echo "$MOON_ICON"
     else
         echo "$SUN_ICON"

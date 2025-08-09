@@ -4,12 +4,13 @@
 
 PREFIX=' '
 
-get_ram()
-{
-    TOTAL_RAM=$(free -mh --si | awk  {'print $2'} | head -n 2 | tail -1)
-    USED_RAM=$(free -mh --si | awk  {'print $3'} | head -n 2 | tail -1)
-    MB="MB"
-
+get_ram() {
+    if ! command -v free >/dev/null 2>&1; then
+        echo ""
+        return 0
+    fi
+    TOTAL_RAM=$(free -mh --si | awk '{print $2}' | head -n 2 | tail -1)
+    USED_RAM=$(free -mh --si | awk '{print $3}' | head -n 2 | tail -1)
     echo "$PREFIX$USED_RAM/$TOTAL_RAM"
 }
 

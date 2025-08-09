@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Mock Arch checkupdates (returns 1 update)
+echo linux 6.0-1

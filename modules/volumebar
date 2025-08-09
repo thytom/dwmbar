@@ -11,13 +11,16 @@ get_volume() {
     
     if command -v wpctl >/dev/null 2>&1; then
         # PipeWire
-        local sink_info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+        local sink_info
+        sink_info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
         volume=$(echo "$sink_info" | awk '{print int($2 * 100)}')
         [[ "$sink_info" =~ MUTED ]] && muted=true || muted=false
     elif command -v pactl >/dev/null 2>&1; then
         # PulseAudio
-        local sink=$(pactl get-default-sink)
-        local sink_info=$(pactl list sinks | grep -A 15 "Name: $sink")
+        local sink
+        sink=$(pactl get-default-sink)
+        local sink_info
+        sink_info=$(pactl list sinks | grep -A 15 "Name: $sink")
         volume=$(echo "$sink_info" | grep 'Volume:' | head -n1 | awk '{print $5}' | sed 's/%//')
         muted=$(echo "$sink_info" | grep 'Mute:' | awk '{print $2}')
         [[ "$muted" == "yes" ]] && muted=true || muted=false

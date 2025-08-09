@@ -2,26 +2,26 @@
 
 PREFIX=''
 FIRE=''
-WARNING_LEVEL=80
+WARNING_LEVEL=${CPU_TEMP_WARN:-80}
 
-get_cputemp()
-{
+get_cputemp() {
     if ! command -v sensors >/dev/null 2>&1; then
         return
     fi
-    
-    local cpu_temp=$(sensors 2>/dev/null | grep -E 'temp1|Core 0|Tctl' | head -n1 | \
+
+    local cpu_temp
+    cpu_temp=$(sensors 2>/dev/null | grep -E 'temp1|Core 0|Tctl' | head -n1 | \
                      awk '{gsub(/[+°C]/, ""); for(i=2;i<=NF;i++) if($i ~ /^[0-9]+\.?[0-9]*$/) {print int($i); break}}')
-    
+
     if [[ -z "$cpu_temp" || ! "$cpu_temp" =~ ^[0-9]+$ ]]; then
         return
     fi
-    
+
     local prefix="$PREFIX"
     if [[ $cpu_temp -ge $WARNING_LEVEL ]]; then
         prefix="$FIRE$PREFIX"
     fi
-    
+
     echo "$prefix$cpu_temp°C"
 }
 

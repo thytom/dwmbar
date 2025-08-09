@@ -3,13 +3,16 @@
 # Prints number of todos
 # Requires t todo manager (https://github.com/sjl/t)
 
-TASKS_DIR="/home/$USER/.todo"
-TASKS_NAME="tasks"
+TASKS_DIR=${TASKS_DIR:-/home/$USER/.todo}
+TASKS_NAME=${TASKS_NAME:-tasks}
 PREFIX=': '
 
-get_todo()
-{
-echo "$PREFIX$(t --task-dir $TASKS_DIR --list $TASKS_NAME | wc -l)"
+get_todo() {
+    if ! command -v t >/dev/null 2>&1; then
+        echo "${PREFIX}0"
+        return 0
+    fi
+    echo "$PREFIX$(t --task-dir "$TASKS_DIR" --list "$TASKS_NAME" 2>/dev/null | wc -l)"
 }
 
 get_todo
