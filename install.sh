@@ -25,11 +25,13 @@ REPO_ROOT="$SCRIPT_DIR"
 BIN_DEST="/usr/bin/dwmbar"
 SHARE_DIR="/usr/share/dwmbar"
 MOD_DEST="$SHARE_DIR/modules"
+LIB_DEST="$SHARE_DIR/lib"
 
 install -d "$SHARE_DIR"
 
 rm -rf "$MOD_DEST"
 cp -rT "$REPO_ROOT/modules" "$MOD_DEST"
+cp -rT "$REPO_ROOT/lib" "$LIB_DEST"
 
 install -m 0755 "$REPO_ROOT/bar.sh" "$SHARE_DIR/bar.sh"
 install -m 0644 "$REPO_ROOT/config" "$SHARE_DIR/config"
