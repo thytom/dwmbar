@@ -2,11 +2,11 @@
 
 # Prints out the time
 
-PREFIX=' '
+PREFIX=' '
 
 get_time()
 {
-    echo "$PREFIX$(date '+%H:%M')"
+    echo "$PREFIX$(date '+%-I:%M %p')"
 }
 
 get_time
