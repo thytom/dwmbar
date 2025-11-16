@@ -23,6 +23,8 @@ DEFAULT_BAR_LOCATION="$DEFAULT_CONFIG_DIR/bar.sh"
 export DEFAULT_BAR_LOCATION
 DEFAULT_CONFIG_LOCATION="$DEFAULT_CONFIG_DIR/config"
 export DEFAULT_CONFIG_LOCATION
+SYNC_SCRIPT="$DEFAULT_CONFIG_DIR/config-sync.sh"
+export SYNC_SCRIPT
 
 CONFIG_DIR="/home/$USER/.config/dwmbar/"
 export CONFIG_DIR
@@ -55,6 +57,10 @@ copy_usr_to_home(){
 	# Also copy JSON config if available
 	if [[ -f "$DEFAULT_CONFIG_DIR/config.json" ]]; then
 		cp -r "$DEFAULT_CONFIG_DIR/config.json" "$CONFIG_DIR"
+	fi
+	# Copy sync script for manual use
+	if [[ -f "$SYNC_SCRIPT" ]]; then
+		cp "$SYNC_SCRIPT" "$CONFIG_DIR/"
 	fi
 }
 
@@ -107,33 +113,16 @@ check_internet() {
 
 check_files
 
-# Prefer JSON config if present and jq is available by generating
-# a bash-compatible config file in the cache directory
-CONFIG_JSON_FILE=""
-if [[ -f "$CONFIG_DIR/config.json" ]]; then
-    CONFIG_JSON_FILE="$CONFIG_DIR/config.json"
-elif [[ -f "$DEFAULT_CONFIG_DIR/config.json" ]]; then
-    CONFIG_JSON_FILE="$DEFAULT_CONFIG_DIR/config.json"
-fi
-
-if [[ -n "$CONFIG_JSON_FILE" ]] && command -v jq >/dev/null 2>&1; then
-    GEN_FILE="$CACHE_DIR/config.from_json"
-    jq -r --arg home "$HOME" '
-      def to_bash($name; $value): $name + "=" + @sh($value);
-      to_bash("MODULES"; ((.modules // []) | map(tostring) | join(" "))),
-      to_bash("ONLINE_MODULES"; ((.online_modules // []) | map(tostring) | join(" "))),
-      to_bash("DELAY"; ((.delay // "0.05")|tostring)),
-      to_bash("CUSTOM_DIR"; (.custom_dir // ($home + "/.config/dwmbar/modules/custom/"))),
-      to_bash("SEPARATOR"; (.separator // " | ")),
-      to_bash("RIGHT_PADDING"; (.right_padding // " ")),
-      to_bash("LEFT_PADDING"; (.left_padding // " "))
-    ' "$CONFIG_JSON_FILE" > "$GEN_FILE" && CONFIG_FILE="$GEN_FILE" && export CONFIG_FILE
-fi
+# Run config sync once at startup to ensure configs are in sync
+[[ -x "$SYNC_SCRIPT" ]] && "$SYNC_SCRIPT" 2>/dev/null || true
 
 while :; do
 	date=$(date +'%S')
 	if [ $(( 10#$date % 5 )) -eq 0 ]; then
 		INTERNET=$(check_internet)
+		# Sync again periodically in case user edits config
+		[[ -x "$SYNC_SCRIPT" ]] && "$SYNC_SCRIPT" 2>/dev/null || true
+                sleep 1
 	fi
 	xsetroot -name "$(exec $DEFAULT_BAR_LOCATION)"
 done

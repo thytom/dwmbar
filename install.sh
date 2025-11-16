@@ -41,6 +41,11 @@ if [[ -f "$REPO_ROOT/config.json" ]]; then
   install -m 0644 "$REPO_ROOT/config.json" "$SHARE_DIR/config.json"
 fi
 
+# Install config sync script if present
+if [[ -f "$REPO_ROOT/config-sync.sh" ]]; then
+  install -m 0755 "$REPO_ROOT/config-sync.sh" "$SHARE_DIR/config-sync.sh"
+fi
+
 install -m 0755 "$REPO_ROOT/dwmbar" "$BIN_DEST"
 
 echo "Installation completed successfully."
