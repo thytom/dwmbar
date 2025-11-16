@@ -114,7 +114,9 @@ check_internet() {
 check_files
 
 # Run config sync once at startup to ensure configs are in sync
-[[ -x "$SYNC_SCRIPT" ]] && "$SYNC_SCRIPT" 2>/dev/null || true
+if [[ -x "$SYNC_SCRIPT" ]]; then
+    "$SYNC_SCRIPT" 2>/dev/null || true
+fi
 
 while :; do
 	date=$(date +'%S')
