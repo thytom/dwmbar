@@ -123,8 +123,10 @@ while :; do
 	if [ $(( 10#$date % 5 )) -eq 0 ]; then
 		INTERNET=$(check_internet)
 		# Sync again periodically in case user edits config
-		[[ -x "$SYNC_SCRIPT" ]] && "$SYNC_SCRIPT" 2>/dev/null || true
-                sleep 1
+		if [[ -x "$SYNC_SCRIPT" ]]; then
+		    "$SYNC_SCRIPT" 2>/dev/null || true
+		fi
+		sleep 1
 	fi
 	xsetroot -name "$(exec $DEFAULT_BAR_LOCATION)"
 done
