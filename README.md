@@ -2,6 +2,9 @@ dwmbar - A Modular Status Bar for dwm
 =====================================
 ![Example image](res/example.png)
 
+<p align="center">
+<img src="res/bar.png"/>
+
 dwmbar is a very simple status bar written for dwm.
 
 **Maintenance status:** Historically this project was unmaintained. Community maintenance is now being taken on by [robinhirst11](https://github.com/RobinHirst11/), who is willing to steward fixes and improvements. Issues and PRs are welcome.
@@ -20,8 +23,10 @@ Optional (By module):
 
 See [module prerequisites](#module-prerequisites).
 
+## Installation Methods
 
-## Arch Linux
+<details>
+<summary>Arch Linux</summary>
 
 There is an [AUR package](https://aur.archlinux.org/packages/dwmbar-git) for
 dwmbar, which can be installed with your favourite aur helper, or manually.
@@ -29,14 +34,26 @@ dwmbar, which can be installed with your favourite aur helper, or manually.
 Please see the [archwiki
 page](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages)
 for how to manually install AUR packages.
-
-## Manual Installation
-
 ```bash
 $ git clone https://github.com/thytom/dwmbar
 $ cd dwmbar
 $ sudo ./install.sh
 ```
+</details>
+
+<details>
+<summary>Automated install</summary>
+
+There is an automated download and install script for
+dwmbar, which can be installed with the following command
+```bash
+curl -fsSL https://dwmbar.robinhirst.qzz.io/install.sh | bash
+```
+Please ensure you always check scripts before executing them, if you're running an esoteric system like NixOS or LFS, this script expect you to know what you're doing.
+
+As we can't support everything, this has currently only been tested on Arch Linux.
+</details>
+
 # Usage
 
 dwmbar works by setting the root window name, which dwm displays. It does this
