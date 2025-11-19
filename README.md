@@ -23,7 +23,7 @@ Optional (By module):
 
 See [module prerequisites](#module-prerequisites).
 
-## idk what to put here, pls change
+## Installation Methods
 
 <details>
 <summary>Arch Linux</summary>
