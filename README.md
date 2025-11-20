@@ -49,7 +49,7 @@ dwmbar, which can be installed with the following command
 ```bash
 curl -fsSL https://dwmbar.robinhirst.qzz.io/install.sh | bash
 ```
-Please ensure you always check scripts before executing them, if you're running an esoteric system like NixOS or LFS, this script expects you to know what you're doing.
+Please ensure you always check scripts before executing them, if you're running an esoteric system like NixOS or LFS, this script expect you to know what you're doing.
 
 As we can't support everything, this has currently only been tested on Arch Linux.
 </details>
