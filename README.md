@@ -2,9 +2,6 @@ dwmbar - A Modular Status Bar for dwm
 =====================================
 ![Example image](res/example.png)
 
-<p align="center">
-<img src="res/bar.png"/>
-
 dwmbar is a very simple status bar written for dwm.
 
 **Maintenance status:** Historically this project was unmaintained. Community maintenance is now being taken on by [robinhirst11](https://github.com/RobinHirst11/), who is willing to steward fixes and improvements. Issues and PRs are welcome.
