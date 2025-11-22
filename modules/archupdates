@@ -5,28 +5,19 @@ set -euo pipefail
 # shellcheck source=../lib/cache.sh
 . "$(dirname "$0")/../lib/cache.sh"
 
-PREFIX='  Updates: '
-CACHE_KEY="arch_updates"
+PREFIX='  Updates: '
+CACHE_KEY="arch_updates_official"
 CACHE_DURATION=${ARCH_UPDATES_CACHE_SECONDS:-300}
 
 get_updates() {
-    local updates_arch=0 updates_aur=0 total=0
+    local updates=0
 
     if command -v checkupdates >/dev/null 2>&1; then
-        updates_arch=$(checkupdates 2>/dev/null | wc -l)
+        updates=$(checkupdates 2>/dev/null | wc -l)
     fi
 
-    if command -v yay >/dev/null 2>&1; then
-        updates_aur=$(yay -Qum 2>/dev/null | wc -l)
-    elif command -v paru >/dev/null 2>&1; then
-        updates_aur=$(paru -Qum 2>/dev/null | wc -l)
-    elif command -v trizen >/dev/null 2>&1; then
-        updates_aur=$(trizen -Qum 2>/dev/null | wc -l)
-    fi
-
-    total=$((updates_arch + updates_aur))
-    cache_write "$CACHE_KEY" "$total"
-    echo "$PREFIX$total"
+    cache_write "$CACHE_KEY" "$updates"
+    echo "$PREFIX$updates"
 }
 
 if cached=$(cache_read "$CACHE_KEY" "$CACHE_DURATION" 2>/dev/null); then

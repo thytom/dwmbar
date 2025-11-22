@@ -3,7 +3,12 @@ dwmbar - A Modular Status Bar for dwm
 ![Example image](res/example.png)
 
 <p align="center">
+<img src="res/bar2.png"/>
+</p>
+
+<p align="center">
 <img src="res/bar.png"/>
+</p>
 
 dwmbar is a very simple status bar written for dwm.
 

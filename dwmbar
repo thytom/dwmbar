@@ -29,7 +29,7 @@ export SYNC_SCRIPT
 CONFIG_DIR="/home/$USER/.config/dwmbar/"
 export CONFIG_DIR
 
-CUSTOM_DIR="$CONFIG_DIR/custom/"
+CUSTOM_DIR="$CONFIG_DIR/modules/custom/"
 export CUSTOM_DIR
 
 # Prefer JSON config if jq is available and file exists
