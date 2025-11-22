@@ -32,9 +32,16 @@ export CONFIG_DIR
 CUSTOM_DIR="$CONFIG_DIR/custom/"
 export CUSTOM_DIR
 
-CONFIG_FILE="$CONFIG_DIR/config"
-if [[ ! -f "$CONFIG_FILE" ]]; then
-	CONFIG_FILE=$DEFAULT_CONFIG_LOCATION
+# Prefer JSON config if jq is available and file exists
+JSON_CONFIG="$CONFIG_DIR/config.json"
+BASH_CONFIG="$CONFIG_DIR/config"
+
+if command -v jq >/dev/null 2>&1 && [[ -f "$JSON_CONFIG" ]]; then
+	CONFIG_FILE="$JSON_CONFIG"
+elif [[ -f "$BASH_CONFIG" ]]; then
+	CONFIG_FILE="$BASH_CONFIG"
+else
+	CONFIG_FILE="$DEFAULT_CONFIG_LOCATION"
 fi
 export CONFIG_FILE
 
@@ -90,6 +97,33 @@ check_files(){
     fi
 }
 
+load_config() {
+	if [[ "$CONFIG_FILE" == *.json ]]; then
+		MODULES=$(jq -r '.modules | join(" ")' "$CONFIG_FILE")
+		ONLINE_MODULES=$(jq -r '.online_modules | join(" ")' "$CONFIG_FILE")
+		DELAY=$(jq -r '.delay // 0.05' "$CONFIG_FILE")
+		SEPARATOR=$(jq -r '.separator // " | "' "$CONFIG_FILE")
+		LEFT_PADDING=$(jq -r '.left_padding // " "' "$CONFIG_FILE")
+		RIGHT_PADDING=$(jq -r '.right_padding // " "' "$CONFIG_FILE")
+		CUSTOM_DIR=$(jq -r '.custom_dir' "$CONFIG_FILE")
+		CUSTOM_DIR="${CUSTOM_DIR/#\~/$HOME}"
+		CUSTOM_DIR="${CUSTOM_DIR/\$USER/$USER}"
+		CUSTOM_DIR="${CUSTOM_DIR/\$HOME/$HOME}"
+		[[ -z "$CUSTOM_DIR" ]] && CUSTOM_DIR="$HOME/.config/dwmbar/modules/custom/"
+	else
+		# shellcheck source=/dev/null
+		source "$CONFIG_FILE"
+	fi
+	
+	export SEPARATOR
+	export MODULES
+	export ONLINE_MODULES
+	export DELAY
+	export LEFT_PADDING
+	export RIGHT_PADDING
+	export CUSTOM_DIR
+}
+
 while getopts 'vc' flag; do
 	case "${flag}" in
 		v) 	print_help
@@ -118,14 +152,18 @@ if [[ -x "$SYNC_SCRIPT" ]]; then
     "$SYNC_SCRIPT" 2>/dev/null || true
 fi
 
+load_config
+
 while :; do
 	date=$(date +'%S')
 	if [ $(( 10#$date % 5 )) -eq 0 ]; then
 		INTERNET=$(check_internet)
+		export INTERNET
 		# Sync again periodically in case user edits config
 		if [[ -x "$SYNC_SCRIPT" ]]; then
 		    "$SYNC_SCRIPT" 2>/dev/null || true
 		fi
+		load_config
 		sleep 1
 	fi
 	xsetroot -name "$(exec $DEFAULT_BAR_LOCATION)"

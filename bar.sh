@@ -23,20 +23,52 @@ fi
 export LC_ALL=C
 export LANG=C
 
- # shellcheck source=/dev/null
-source "$CONFIG_FILE"
+if [[ "$CONFIG_FILE" == *.json ]]; then
+	MODULES=$(jq -r '.modules | join(" ")' "$CONFIG_FILE")
+	ONLINE_MODULES=$(jq -r '.online_modules | join(" ")' "$CONFIG_FILE")
+	DELAY=$(jq -r '.delay // 0.05' "$CONFIG_FILE")
+	SEPARATOR=$(jq -r '.separator // " | "' "$CONFIG_FILE")
+	LEFT_PADDING=$(jq -r '.left_padding // " "' "$CONFIG_FILE")
+	RIGHT_PADDING=$(jq -r '.right_padding // " "' "$CONFIG_FILE")
+	CUSTOM_DIR=$(jq -r '.custom_dir' "$CONFIG_FILE")
+	CUSTOM_DIR="${CUSTOM_DIR/#\~/$HOME}"
+	CUSTOM_DIR="${CUSTOM_DIR/\$USER/$USER}"
+	CUSTOM_DIR="${CUSTOM_DIR/\$HOME/$HOME}"
+	[[ -z "$CUSTOM_DIR" ]] && CUSTOM_DIR="$HOME/.config/dwmbar/modules/custom/"
+else
+	# shellcheck source=/dev/null
+	source "$CONFIG_FILE"
+fi
+
+export SEPARATOR
+export MODULES
+export ONLINE_MODULES
+export DELAY
+export LEFT_PADDING
+export RIGHT_PADDING
+export CUSTOM_DIR
 
 get_bar()
 {
+	local bar=""
+	local first=true
+	
 	for module in $MODULES; do
-        if [[ $INTERNET -eq 0 ]] || [[ $ONLINE_MODULES != *"$module"* ]];then
-            module_out="$(sed 's/\.$//g' "$OUTPUT_CACHE$module")"
-			bar="$bar$module_out"
+        if [[ $INTERNET -eq 0 ]] || [[ $ONLINE_MODULES != *"$module"* ]]; then
+            module_out="$(cat "$OUTPUT_CACHE$module" 2>/dev/null)"
+			
+			if [[ -n "$module_out" ]]; then
+				if [[ "$first" == true ]]; then
+					bar="$module_out"
+					first=false
+				else
+					bar="$bar$SEPARATOR$module_out"
+				fi
+			fi
 		fi
 	done
-	# Uncomment to remove last separator
-	# bar="$(echo "$bar" | sed 's/.$//g')"
-	echo "$LEFT_PADDING${bar::-2}$RIGHT_PADDING"
+	
+	echo "$LEFT_PADDING$bar$RIGHT_PADDING"
 }
 
 run_module()
@@ -50,8 +82,7 @@ run_module()
 
 	if [[ "$out" = " " ]]; then
 		echo "" > "$OUTPUT_CACHE$module"
-	elif [[ ! "$out" = "" ]]; then
-		out="$out$SEPARATOR."
+	else
 		echo "$out" > "$OUTPUT_CACHE$module"
 	fi
 }
