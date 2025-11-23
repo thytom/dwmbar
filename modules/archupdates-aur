@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euo pipefail
+# shellcheck source=../lib/common.sh
+. "$(dirname "$0")/../lib/common.sh"
+# shellcheck source=../lib/cache.sh
+. "$(dirname "$0")/../lib/cache.sh"
+
+PREFIX='  AUR Updates: '
+CACHE_KEY="arch_updates_aur"
+CACHE_DURATION=${ARCH_UPDATES_AUR_CACHE_SECONDS:-300}
+
+get_aur_updates() {
+    local updates=0
+
+    if command -v yay >/dev/null 2>&1; then
+        updates=$(yay -Qum 2>/dev/null | wc -l)
+    elif command -v paru >/dev/null 2>&1; then
+        updates=$(paru -Qum 2>/dev/null | wc -l)
+    elif command -v trizen >/dev/null 2>&1; then
+        updates=$(trizen -Qum 2>/dev/null | wc -l)
+    fi
+
+    cache_write "$CACHE_KEY" "$updates"
+    echo "$PREFIX$updates"
+}
+
+if cached=$(cache_read "$CACHE_KEY" "$CACHE_DURATION" 2>/dev/null); then
+    echo "$PREFIX$cached"
+else
+    get_aur_updates
+fi
