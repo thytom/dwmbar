@@ -187,17 +187,20 @@ int main(int argc, char **argv) {
   // Wait on the modules in sequence
   for (int i = 0; i < module_count; i++) {
     // Wait on the pid
-    char *s;
+    char *s = NULL;
     size_t len;
+    ssize_t read;
     int sl = 0;
     waitpid(processes[i].pid, &sl, 0);
 
-    s = fgetln(processes[i].fp, &len);
+    while((read = getline(&s, &len, processes[i].fp)) != -1);
 
     // Just NUL terminate over the \n since we don't want it anyway
     s[len - 1] = '\0';
 
     printf("%s", s);
+
+    free(s);
 
     fclose(processes[i].fp);
 
