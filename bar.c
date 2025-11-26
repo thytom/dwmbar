@@ -197,7 +197,7 @@ int main(int argc, char **argv) {
 
     while((read = getline(&s, &len, processes[i].fp)) == -1);
 
-    for (size_t i = 0; i < read, i++) {
+    for (size_t i = 0; i < read; i++) {
         if (s[i] == '\n') {
             s[i] = '\0';
             break;
