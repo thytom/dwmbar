@@ -195,10 +195,14 @@ int main(int argc, char **argv) {
     int sl = 0;
     waitpid(processes[i].pid, &sl, 0);
 
-    while((read = getline(&s, &len, processes[i].fp)) != -1);
+    while((read = getline(&s, &len, processes[i].fp)) == -1);
 
-    // Just NUL terminate over the \n since we don't want it anyway
-    s[len - 1] = '\0';
+    for (size_t i = 0; i < read, i++) {
+        if (s[i] == '\n') {
+            s[i] = '\0';
+            break;
+        }
+    }
 
     printf("%s", s);
 
