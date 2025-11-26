@@ -19,6 +19,11 @@ static struct {
 
 } s_runtime_constants = {NULL};
 
+struct module_process_block {
+  int pid;
+  FILE *fp;
+};
+
 int initialise_runtime_constants(void) {
   if (!(s_runtime_constants.custom_modules_dir = getenv("CUSTOM_DIR"))) {
     return CORE_ENVIRONMENT_INIT_ERROR;
@@ -72,6 +77,7 @@ char *find_module(const char *basename) {
   // Get the path for the custom location
   char *custom_location =
       build_path(s_runtime_constants.custom_modules_dir, basename);
+
   if (access(custom_location, k_permissions_to_check) == 0)
     return custom_location;
   free(custom_location);
@@ -85,34 +91,41 @@ char *find_module(const char *basename) {
   return NULL;
 }
 
-FILE *run_module(const char *const module_name) {
+struct module_process_block run_module(const char *const module_name) {
   // Does the module exist in the custom modules directory?
   char *module_path = find_module(module_name);
 
   if (!module_path)
-    return NULL;
+    return (struct module_process_block){0};
 
-  FILE *output = popen(module_path, "r");
+  // Create the pipe
+  int fds[2] = {0};
+  int pipe_success = pipe(fds); // TODO: Error handle
 
-  free(module_path);
+  // Fork the process
+  pid_t pid = fork();
+  if (pid == 0) {
+    // We are the child
 
-  return output;
+    // Set up our stdout to be the input of the pipe
+    dup2(fds[1], STDOUT_FILENO);
 
-  /*
-  char *s = NULL;
-  size_t i = 0;
+    // Switch into the new program
+    execl(module_path, module_path, NULL);
 
-  while((s = fgetln(output, &i)) == NULL);
+    exit(0);
+  } else {
+    // We're the parent
+    // Close the write end
+    close(fds[1]);
 
-  memcpy(output_buffer, s, i-1);
+    // Open the read file descriptor as a full file
+    FILE *output = fdopen(fds[0], "r");
 
-  if (pclose(output) != 0) {
-      fprintf(stderr, "Error!");
+    free(module_path);
+
+    return (struct module_process_block){.pid = pid, .fp = output};
   }
-
-
-  return NULL;
-  */
 }
 
 /*
@@ -123,44 +136,81 @@ int main(int argc, char **argv) {
   if (ret < 1)
     return ret;
 
-  if (argc == 1) {
-    fprintf(stderr, "Bar requires at least one argument (a module)");
+  char *modules_str = getenv("MODULES");
+  char *online_modules_str = getenv("ONLINE_MODULES");
+  int module_count = 1;
+  if (!modules_str)
     return 1;
+
+  if (strlen(modules_str) == 0)
+    return 1;
+
+  // Figure out how many modules there are - delimited by spaces
+  for (size_t i = 0; i < strlen(modules_str); i++) {
+    if (modules_str[i] == ' ') {
+      module_count++;
+    }
   }
 
-  FILE **pipes = calloc(argc - 1, sizeof(FILE *));
+  // with the count, allocate a table to store the strings
+
+  char **module_names = calloc(module_count, sizeof(char *));
+
+  // Extract each module's name
+  int last_start = 0;
+  int module = 0;
+  for (size_t i = 0; i <= strlen(modules_str); i++) {
+    if (modules_str[i] == ' ' || modules_str[i] == '\0') {
+      int name_length = i - last_start;
+      module_names[module] = calloc((name_length), sizeof(char));
+      memcpy(module_names[module], modules_str + last_start,
+             sizeof(char) * (name_length));
+      module_names[module][name_length] = 0;
+      last_start = i + 1;
+      module++;
+    }
+  }
+
+  struct module_process_block *processes =
+      calloc(module_count, sizeof(struct module_process_block));
 
   // Start all the modules
-  for (int i = 1; i < argc; i++) {
-    pipes[i - 1] = run_module(argv[i]);
+  for (int i = 0; i < module_count; i++) {
+    processes[i] = run_module(module_names[i]);
+
+    if (processes[i].pid == 0) {
+      // TODO: Properly handle
+      fprintf(stderr, "Error running module #%d\n", i);
+    }
   }
 
   // Wait on the modules in sequence
-  for (int i = 1; i < argc; i++) {
-
+  for (int i = 0; i < module_count; i++) {
+    // Wait on the pid
     char *s;
     size_t len;
-    while (!(s = fgetln(pipes[i - 1], &len)))
-      ;
+    int sl = 0;
+    waitpid(processes[i].pid, &sl, 0);
 
-    s[len - 1] =
-        '\0'; // Just NUL terminate over the \n since we don't want it anyway
+    s = fgetln(processes[i].fp, &len);
+
+    // Just NUL terminate over the \n since we don't want it anyway
+    s[len - 1] = '\0';
 
     printf("%s", s);
 
-    if (pclose(pipes[i - 1]) != 0) {
-      fprintf(stderr, "Failed to close file descriptor %p\n", pipes[i - 1]);
-    }
+    fclose(processes[i].fp);
 
-    if (i != argc - 1) {
+    if (i != module_count - 1) {
       printf("%s%s%s", s_runtime_constants.left_padding,
              s_runtime_constants.separator, s_runtime_constants.right_padding);
     }
   }
 
-  putchar('\n');
+  free(module_names);
+  free(processes);
 
-  free(pipes);
+  putchar('\n');
 
   return 0;
 }
