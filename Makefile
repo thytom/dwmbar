@@ -20,5 +20,8 @@ fmt:
 	@echo "Running shfmt..."
 	@shfmt -w -i 4 -ci -sr bar.sh dwmbar modules/*
 
+bar: bar.c
+	gcc bar.c -o bar
+
 # CI target: lint + test
 ci: lint test

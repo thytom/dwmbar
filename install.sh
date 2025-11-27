@@ -19,8 +19,8 @@ REPO_ROOT="$SCRIPT_DIR"
 
 [[ -f "$REPO_ROOT/dwmbar" ]] || { echo "dwmbar executable not found." >&2; exit 1; }
 [[ -d "$REPO_ROOT/modules" ]] || { echo "modules directory not found." >&2; exit 1; }
-[[ -f "$REPO_ROOT/bar.sh" ]] || { echo "bar.sh not found." >&2; exit 1; }
 [[ -f "$REPO_ROOT/config" ]] || { echo "config file not found." >&2; exit 1; }
+[[ -f "$REPO_ROOT/bar" ]] || { echo "bar not found." >&2; exit 1; }
 
 BIN_DEST="/usr/bin/dwmbar"
 SHARE_DIR="/usr/share/dwmbar"
@@ -33,7 +33,7 @@ rm -rf "$MOD_DEST"
 cp -rT "$REPO_ROOT/modules" "$MOD_DEST"
 cp -rT "$REPO_ROOT/lib" "$LIB_DEST"
 
-install -m 0755 "$REPO_ROOT/bar.sh" "$SHARE_DIR/bar.sh"
+install -m 0755 "$REPO_ROOT/bar" "$SHARE_DIR/bar"
 install -m 0644 "$REPO_ROOT/config" "$SHARE_DIR/config"
 
 # Install optional JSON config if present
