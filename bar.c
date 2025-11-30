@@ -204,15 +204,14 @@ int main(int argc, char **argv) {
         }
     }
 
-    printf("%s", s);
+    printf("%s%s%s", s_runtime_constants.left_padding, s, s_runtime_constants.right_padding);
 
     free(s);
 
     fclose(processes[i].fp);
 
     if (i != module_count - 1) {
-      printf("%s%s%s", s_runtime_constants.left_padding,
-             s_runtime_constants.separator, s_runtime_constants.right_padding);
+      printf("%s", s_runtime_constants.separator);
     }
   }
 
