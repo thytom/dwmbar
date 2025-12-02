@@ -147,7 +147,7 @@ check_internet() {
 
 check_config() {
     if [[ -z "$DWMBAR_CONFIG_TIME" ]]; then
-        $DWMBAR_CONFIG_TIME=$(stat --format=%Y "$CONFIG_FILE")
+        DWMBAR_CONFIG_TIME=$(stat --format=%Y "$CONFIG_FILE")
     fi
 
     $NEW_TIME=$(stat --format=%Y "$CONFIG_FILE")
