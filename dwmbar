@@ -150,7 +150,7 @@ check_config() {
         $DWMBAR_CONFIG_TIME=$(date -r "$CONFIG_FILE")
     fi
 
-    $NEW_TIME = date -r "$CONFIG_FILE"
+    $NEW_TIME=$(date -r "$CONFIG_FILE")
     if [[ "$DWMBAR_CONFIG_TIME" != "$NEW_TIME" ]]; then
         echo "Config changed!"
         $DWMBAR_CONFIG_TIME = $NEW_TIME
