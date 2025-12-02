@@ -186,6 +186,7 @@ int main(int argc, char **argv) {
     }
   }
 
+  printf("%s", s_runtime_constants.left_padding);
   // Wait on the modules in sequence
   for (int i = 0; i < module_count; i++) {
     // Wait on the pid
@@ -204,7 +205,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    printf("%s%s%s", s_runtime_constants.left_padding, s, s_runtime_constants.right_padding);
+    printf("%s", s);
 
     free(s);
 
@@ -218,7 +219,7 @@ int main(int argc, char **argv) {
   free(module_names);
   free(processes);
 
-  putchar('\n');
+  printf("%s\n", s_runtime_constants.right_padding);
 
   return 0;
 }
