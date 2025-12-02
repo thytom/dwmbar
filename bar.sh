@@ -23,31 +23,6 @@ fi
 export LC_ALL=C
 export LANG=C
 
-if [[ "$CONFIG_FILE" == *.json ]]; then
-	MODULES=$(jq -r '.modules | join(" ")' "$CONFIG_FILE")
-	ONLINE_MODULES=$(jq -r '.online_modules | join(" ")' "$CONFIG_FILE")
-	DELAY=$(jq -r '.delay // 0.05' "$CONFIG_FILE")
-	SEPARATOR=$(jq -r '.separator // " | "' "$CONFIG_FILE")
-	LEFT_PADDING=$(jq -r '.left_padding // " "' "$CONFIG_FILE")
-	RIGHT_PADDING=$(jq -r '.right_padding // " "' "$CONFIG_FILE")
-	CUSTOM_DIR=$(jq -r '.custom_dir' "$CONFIG_FILE")
-	CUSTOM_DIR="${CUSTOM_DIR/#\~/$HOME}"
-	CUSTOM_DIR="${CUSTOM_DIR/\$USER/$USER}"
-	CUSTOM_DIR="${CUSTOM_DIR/\$HOME/$HOME}"
-	[[ -z "$CUSTOM_DIR" ]] && CUSTOM_DIR="$HOME/.config/dwmbar/modules/custom/"
-else
-	# shellcheck source=/dev/null
-	source "$CONFIG_FILE"
-fi
-
-export SEPARATOR
-export MODULES
-export ONLINE_MODULES
-export DELAY
-export LEFT_PADDING
-export RIGHT_PADDING
-export CUSTOM_DIR
-
 get_bar()
 {
 	local bar=""
