@@ -151,6 +151,12 @@ check_config() {
     fi
 
     NEW_TIME=$(stat --format=%Y "$CONFIG_FILE")
+
+    if [[ -z "$NEW_TIME" ]]; then
+        echo "Error!"
+    fi
+
+
     if [[ "$DWMBAR_CONFIG_TIME" != "$NEW_TIME" ]]; then
         echo "Config changed!"
         DWMBAR_CONFIG_TIME=$NEW_TIME
