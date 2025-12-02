@@ -145,7 +145,19 @@ check_internet() {
         fi
 }
 
-check_files
+check_config() {
+    if [[ -z "$DWMBAR_CONFIG_TIME" ]]; then
+        $DWMBAR_CONFIG_TIME = date -r "$CONFIG_FILE"
+    fi
+
+    $NEW_TIME = date -r "$CONFIG_FILE"
+    if [[ "$DWMBAR_CONFIG_TIME" != "$NEW_TIME" ]]; then
+        echo "Config changed!"
+        $DWMBAR_CONFIG_TIME = $NEW_TIME
+    fi
+}
+
+#check_files
 
 # Run config sync once at startup to ensure configs are in sync
 if [[ -x "$SYNC_SCRIPT" ]]; then
@@ -154,17 +166,20 @@ fi
 
 load_config
 
+check_config
+
 while :; do
-	date=$(date +'%S')
-	if [ $(( 10#$date % 5 )) -eq 0 ]; then
-		INTERNET=$(check_internet)
-		export INTERNET
-		# Sync again periodically in case user edits config
-		if [[ -x "$SYNC_SCRIPT" ]]; then
-		    "$SYNC_SCRIPT" 2>/dev/null || true
-		fi
-		load_config
-		sleep 1
-	fi
-	xsetroot -name "$(exec $DEFAULT_BAR_LOCATION)"
+    check_config
+	# date=$(date +'%S')
+	# if [ $(( 10#$date % 5 )) -eq 0 ]; then
+	# 	INTERNET=$(check_internet)
+	# 	export INTERNET
+	# 	# Sync again periodically in case user edits config
+	# 	if [[ -x "$SYNC_SCRIPT" ]]; then
+	# 	    "$SYNC_SCRIPT" 2>/dev/null || true
+	# 	fi
+	# 	load_config
+	# 	sleep 1
+	# fi
+	# xsetroot -name "$(exec $DEFAULT_BAR_LOCATION)"
 done
